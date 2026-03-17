@@ -3,7 +3,6 @@ const path = require('path');
 const crypto = require('crypto');
 
 const DB_PATH = path.join(__dirname, 'data', 'portal.db');
-
 let db;
 
 function getDb() {
@@ -24,6 +23,7 @@ function initTables() {
       company_name TEXT NOT NULL,
       client_email TEXT,
       status TEXT DEFAULT 'active',
+      gdrive_folder_id TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -45,6 +45,8 @@ function initTables() {
       stored_name TEXT NOT NULL,
       mime_type TEXT,
       size INTEGER,
+      gdrive_file_id TEXT,
+      synced INTEGER DEFAULT 0,
       uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -60,12 +62,7 @@ function initTables() {
   `);
 }
 
-function generateToken() {
-  return crypto.randomBytes(6).toString('hex');
-}
-
-function generateId() {
-  return crypto.randomUUID();
-}
+function generateToken() { return crypto.randomBytes(6).toString('hex'); }
+function generateId() { return crypto.randomUUID(); }
 
 module.exports = { getDb, generateToken, generateId };

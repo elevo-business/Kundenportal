@@ -5,1096 +5,397 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ELEVO — Dein Projekt-Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0A0A0C;
-      --surface: #111115;
-      --card: #18181D;
-      --border: #2A2A32;
-      --border-hover: #3A3A45;
-      --text: #EEEEF0;
-      --text-secondary: #8A8A99;
-      --text-muted: #55555F;
-      --accent: #6C5CE7;
-      --accent-hover: #5A4BD6;
-      --accent-glow: rgba(108, 92, 231, 0.15);
-      --success: #00D68F;
-      --success-bg: rgba(0, 214, 143, 0.1);
-      --warning: #FFB347;
-      --danger: #FF6B6B;
-      --radius: 12px;
-      --radius-sm: 8px;
-      --font-display: 'Space Grotesk', sans-serif;
-      --font-body: 'Inter', sans-serif;
+      --bg: #09090B;
+      --surface: #111114;
+      --card: #18181B;
+      --border: #27272A;
+      --border-hover: #3F3F46;
+      --text: #FAFAFA;
+      --text-secondary: #A1A1AA;
+      --text-muted: #52525B;
+      --gold: #D4A853;
+      --gold-hover: #E8C97A;
+      --gold-glow: rgba(212, 168, 83, 0.10);
+      --gold-muted: #A68B3C;
+      --success: #22C55E;
+      --success-bg: rgba(34, 197, 94, 0.08);
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Archivo', 'Helvetica Neue', sans-serif;
     }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
-    /* ═══ LAYOUT ═══ */
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 24px 20px 100px;
-    }
+    .container { max-width: 700px; margin: 0 auto; padding: 24px 20px 100px; }
 
     /* ═══ HEADER ═══ */
-    .portal-header {
-      text-align: center;
-      padding: 48px 0 32px;
-    }
+    .portal-header { text-align: center; padding: 48px 0 36px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+    .logo { font-family: var(--font-body); font-size: 18px; font-weight: 700; letter-spacing: 0.3em; color: var(--text); text-transform: uppercase; margin-bottom: 4px; }
+    .logo span { color: var(--gold); }
+    .portal-subtitle { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-secondary); font-style: italic; margin-top: 6px; }
+    .company-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); padding: 10px 24px; margin-top: 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
+    .company-badge::before { content: ''; width: 6px; height: 6px; background: var(--success); display: block; }
 
-    .logo {
-      font-family: var(--font-display);
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .logo span { color: var(--accent); }
-
-    .portal-subtitle {
-      color: var(--text-secondary);
-      font-size: 15px;
-    }
-
-    .company-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 8px 20px;
-      margin-top: 16px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .company-badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: var(--success);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    /* ═══ PROGRESS BAR ═══ */
-    .progress-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 32px;
-    }
-
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .progress-title {
-      font-family: var(--font-display);
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .progress-percent {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .progress-bar {
-      height: 6px;
-      background: var(--card);
-      border-radius: 100px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), #8B7CF7);
-      border-radius: 100px;
-      transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .checklist {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .checklist-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
-    .checklist-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 11px;
-    }
-
-    .checklist-icon.done {
-      background: var(--success-bg);
-      color: var(--success);
-    }
-
-    .checklist-icon.pending {
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-    }
-
-    .checklist-item.done { color: var(--success); }
+    /* ═══ PROGRESS ═══ */
+    .progress-section { background: var(--surface); border: 1px solid var(--border); padding: 28px; margin-bottom: 32px; position: relative; }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .progress-title { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+    .progress-percent { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--gold); }
+    .progress-bar { height: 2px; background: var(--border); margin-bottom: 24px; }
+    .progress-fill { height: 100%; background: var(--gold); transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+    .checklist { display: flex; flex-direction: column; gap: 10px; }
+    .checklist-item { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+    .checklist-icon { width: 18px; height: 18px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; }
+    .checklist-icon.done { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); }
+    .checklist-item.done { color: var(--gold); }
 
     /* ═══ STEPS NAV ═══ */
-    .steps-nav {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 32px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
+    .steps-nav { display: flex; gap: 2px; margin-bottom: 32px; }
+    .step-tab { flex: 1; padding: 14px 6px; background: var(--surface); border: 1px solid var(--border); cursor: pointer; text-align: center; transition: all 0.2s; font-size: 11px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+    .step-tab:hover { border-color: var(--border-hover); color: var(--text-secondary); }
+    .step-tab.active { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
+    .step-tab.completed { border-bottom: 2px solid var(--gold-muted); }
+    .step-tab .step-num { font-family: var(--font-display); font-weight: 700; font-size: 18px; display: block; margin-bottom: 2px; color: inherit; }
 
-    .step-tab {
-      flex: 1;
-      min-width: 0;
-      padding: 12px 8px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      white-space: nowrap;
-    }
-
-    .step-tab:hover { border-color: var(--border-hover); background: var(--card); }
-    .step-tab.active { border-color: var(--accent); background: var(--accent-glow); color: var(--text); }
-    .step-tab.completed { border-color: var(--success); }
-    .step-tab .step-num { font-family: var(--font-display); font-weight: 700; font-size: 14px; display: block; margin-bottom: 2px; }
-    .step-tab.completed .step-num { color: var(--success); }
-    .step-tab.active .step-num { color: var(--accent); }
-
-    /* ═══ FORM PANELS ═══ */
+    /* ═══ PANELS ═══ */
     .step-panel { display: none; }
     .step-panel.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .panel-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+    .panel-title { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .panel-desc { color: var(--text-secondary); font-size: 14px; margin-top: 8px; line-height: 1.7; }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    /* ═══ FORM ═══ */
+    .field { margin-bottom: 22px; }
+    .field label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; color: var(--text-secondary); }
+    .field .hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+    .field label .optional { color: var(--text-muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; }
 
-    .panel-header {
-      margin-bottom: 28px;
+    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], textarea, select {
+      width: 100%; padding: 12px 14px; background: var(--card); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 14px; transition: border-color 0.2s; outline: none;
     }
+    input:focus, textarea:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold-glow); }
+    input::placeholder, textarea::placeholder { color: var(--text-muted); }
+    textarea { min-height: 100px; resize: vertical; line-height: 1.7; }
+    select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
 
-    .panel-title {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
+    .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .radio-option, .checkbox-option { padding: 10px 18px; background: var(--card); border: 1px solid var(--border); cursor: pointer; font-size: 13px; transition: all 0.2s; user-select: none; font-weight: 500; }
+    .radio-option:hover, .checkbox-option:hover { border-color: var(--border-hover); }
+    .radio-option.selected, .checkbox-option.selected { border-color: var(--gold); background: var(--gold-glow); color: var(--gold); }
+    .radio-option input, .checkbox-option input { display: none; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 500px) { .field-row { grid-template-columns: 1fr; } }
 
-    .panel-desc {
-      color: var(--text-secondary);
-      font-size: 14px;
-      line-height: 1.6;
-    }
+    .hours-grid { display: grid; grid-template-columns: auto 1fr 8px 1fr; gap: 8px; align-items: center; }
+    .hours-grid .day-label { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); min-width: 28px; }
+    .hours-grid .sep { text-align: center; color: var(--text-muted); }
+    .hours-grid input { padding: 8px 10px; font-size: 13px; }
 
-    /* ═══ FORM ELEMENTS ═══ */
-    .field {
-      margin-bottom: 20px;
-    }
+    /* ═══ UPLOAD ═══ */
+    .upload-categories { display: flex; flex-direction: column; gap: 12px; }
+    .upload-cat { background: var(--surface); border: 1px solid var(--border); }
+    .upload-cat-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; }
+    .upload-cat-title { font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 10px; letter-spacing: 0.02em; }
+    .upload-cat-title .badge { font-size: 10px; font-weight: 700; padding: 3px 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .upload-cat-title .badge.required { background: rgba(245, 158, 11, 0.1); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.2); }
+    .upload-cat-title .badge.optional { background: var(--card); color: var(--text-muted); border: 1px solid var(--border); }
+    .upload-cat-count { font-size: 12px; color: var(--text-muted); }
+    .upload-cat-body { padding: 0 20px 20px; }
 
-    .field label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
+    .dropzone { border: 1px dashed var(--border); padding: 36px 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--gold); background: var(--gold-glow); }
+    .dropzone-icon { font-size: 24px; margin-bottom: 8px; color: var(--text-muted); }
+    .dropzone-text { font-size: 13px; color: var(--text-secondary); }
+    .dropzone-text strong { color: var(--gold); }
+    .dropzone-hint { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
 
-    .field .hint {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .field label .optional {
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"],
-    textarea, select {
-      width: 100%;
-      padding: 12px 14px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 14px;
-      transition: border-color 0.2s;
-      outline: none;
-    }
-
-    input:focus, textarea:focus, select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-
-    input::placeholder, textarea::placeholder {
-      color: var(--text-muted);
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-      line-height: 1.6;
-    }
-
-    select {
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A8A99' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
-    }
-
-    select option {
-      background: var(--card);
-      color: var(--text);
-    }
-
-    .radio-group, .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .radio-option, .checkbox-option {
-      padding: 10px 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 13px;
-      transition: all 0.2s;
-      user-select: none;
-    }
-
-    .radio-option:hover, .checkbox-option:hover {
-      border-color: var(--border-hover);
-    }
-
-    .radio-option.selected, .checkbox-option.selected {
-      border-color: var(--accent);
-      background: var(--accent-glow);
-      color: var(--text);
-    }
-
-    .radio-option input, .checkbox-option input {
-      display: none;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    @media (max-width: 500px) {
-      .field-row { grid-template-columns: 1fr; }
-    }
-
-    /* ═══ HOURS GRID ═══ */
-    .hours-grid {
-      display: grid;
-      grid-template-columns: auto 1fr 6px 1fr;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .hours-grid .day-label {
-      font-size: 13px;
-      font-weight: 500;
-      min-width: 30px;
-    }
-
-    .hours-grid .sep {
-      text-align: center;
-      color: var(--text-muted);
-    }
-
-    .hours-grid input {
-      padding: 8px 10px;
-      font-size: 13px;
-    }
-
-    /* ═══ UPLOAD AREA ═══ */
-    .upload-categories {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .upload-cat {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .upload-cat-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px;
-      cursor: pointer;
-    }
-
-    .upload-cat-title {
-      font-weight: 600;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .upload-cat-title .badge {
-      font-size: 11px;
-      font-weight: 500;
-      padding: 2px 8px;
-      border-radius: 100px;
-      background: var(--accent-glow);
-      color: var(--accent);
-    }
-
-    .upload-cat-title .badge.required {
-      background: rgba(255, 179, 71, 0.1);
-      color: var(--warning);
-    }
-
-    .upload-cat-count {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
-
-    .upload-cat-body {
-      padding: 0 16px 16px;
-    }
-
-    .dropzone {
-      border: 2px dashed var(--border);
-      border-radius: var(--radius-sm);
-      padding: 32px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .dropzone:hover, .dropzone.dragover {
-      border-color: var(--accent);
-      background: var(--accent-glow);
-    }
-
-    .dropzone-text {
-      font-size: 13px;
-      color: var(--text-secondary);
-    }
-
-    .dropzone-text strong {
-      color: var(--accent);
-    }
-
-    .dropzone-hint {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    .file-list {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .file-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-      background: var(--card);
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-    }
-
-    .file-item-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-    }
-
-    .file-item-name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .file-item-size {
-      color: var(--text-muted);
-      font-size: 11px;
-      flex-shrink: 0;
-    }
-
-    .file-item-delete {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 4px;
-      font-size: 16px;
-      line-height: 1;
-      transition: color 0.2s;
-    }
-
+    .file-list { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
+    .file-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--card); font-size: 13px; }
+    .file-item-info { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .file-item-icon { width: 28px; height: 28px; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    .file-item-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .file-item-size { color: var(--text-muted); font-size: 11px; flex-shrink: 0; }
+    .file-item-delete { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px 8px; font-size: 14px; transition: color 0.2s; }
     .file-item-delete:hover { color: var(--danger); }
 
-    .file-thumb {
-      width: 32px;
-      height: 32px;
-      border-radius: 4px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
+    /* ═══ NAVIGATION ═══ */
+    .step-actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .btn { padding: 12px 32px; font-family: var(--font-body); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: none; display: inline-flex; align-items: center; gap: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { background: var(--gold-hover); }
+    .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: var(--text-secondary); color: var(--text); }
+    .btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-    /* ═══ NAVIGATION BUTTONS ═══ */
-    .step-actions {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 36px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
-
-    .btn {
-      padding: 12px 28px;
-      border-radius: 100px;
-      font-family: var(--font-body);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-    }
-
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
-
-    .btn-secondary {
-      background: var(--card);
-      color: var(--text-secondary);
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover { border-color: var(--border-hover); color: var(--text); }
-
-    .btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* ═══ SUCCESS SCREEN ═══ */
-    .success-screen {
-      display: none;
-      text-align: center;
-      padding: 60px 20px;
-    }
-
+    /* ═══ SUCCESS ═══ */
+    .success-screen { display: none; text-align: center; padding: 80px 20px; }
     .success-screen.active { display: block; }
-
-    .success-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: var(--success-bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-      font-size: 32px;
-    }
-
-    .success-title {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .success-text {
-      color: var(--text-secondary);
-      font-size: 15px;
-      max-width: 400px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
+    .success-icon { width: 56px; height: 56px; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; font-size: 24px; color: var(--gold); }
+    .success-title { font-family: var(--font-display); font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+    .success-text { color: var(--text-secondary); font-size: 15px; max-width: 420px; margin: 0 auto; line-height: 1.8; }
 
     /* ═══ TOAST ═══ */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      padding: 14px 20px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      color: var(--text);
-      z-index: 1000;
-      transform: translateY(100px);
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
-
+    .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 20px; background: var(--card); border: 1px solid var(--border); font-size: 13px; color: var(--text); z-index: 1000; transform: translateY(100px); opacity: 0; transition: all 0.3s; font-weight: 500; }
     .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.success { border-color: var(--success); }
-    .toast.error { border-color: var(--danger); }
+    .toast.success { border-left: 3px solid var(--gold); }
+    .toast.error { border-left: 3px solid var(--danger); }
 
     /* ═══ LOADING ═══ */
-    .loading-screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 60vh;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
+    .loading-screen { display: flex; justify-content: center; align-items: center; min-height: 60vh; flex-direction: column; gap: 16px; }
+    .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--gold); animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ═══ ERROR ═══ */
-    .error-screen {
-      display: none;
-      text-align: center;
-      padding: 80px 20px;
-    }
+    .error-screen { display: none; text-align: center; padding: 80px 20px; }
+    .error-screen .error-code { font-family: var(--font-display); font-size: 56px; font-weight: 700; color: var(--text-muted); }
 
-    .error-screen .error-code {
-      font-family: var(--font-display);
-      font-size: 48px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
+    .portal-footer { text-align: center; padding: 40px 0 24px; font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .portal-footer a { color: var(--gold-muted); text-decoration: none; }
 
-    /* ═══ FOOTER ═══ */
-    .portal-footer {
-      text-align: center;
-      padding: 40px 0 24px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .portal-footer a {
-      color: var(--text-secondary);
-      text-decoration: none;
-    }
+    /* ═══ ONBOARDING TOUR ═══ */
+    .tour-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 900; display: none; }
+    .tour-overlay.active { display: block; }
+    .tour-spotlight { position: absolute; box-shadow: 0 0 0 4000px rgba(0,0,0,0.75); z-index: 901; border: 1px solid var(--gold); pointer-events: none; transition: all 0.4s ease; }
+    .tour-tooltip { position: absolute; z-index: 902; background: var(--surface); border: 1px solid var(--gold); padding: 24px; max-width: 340px; transition: all 0.3s ease; }
+    .tour-tooltip::before { content: ''; position: absolute; top: -6px; left: 24px; width: 10px; height: 10px; background: var(--surface); border-left: 1px solid var(--gold); border-top: 1px solid var(--gold); transform: rotate(45deg); }
+    .tour-step-indicator { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .tour-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .tour-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+    .tour-actions { display: flex; justify-content: space-between; align-items: center; }
+    .tour-skip { background: none; border: none; color: var(--text-muted); font-size: 12px; cursor: pointer; font-family: var(--font-body); }
+    .tour-skip:hover { color: var(--text-secondary); }
+    .tour-next { padding: 8px 20px; background: var(--gold); color: var(--bg); border: none; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); }
+    .tour-next:hover { background: var(--gold-hover); }
+    .tour-dots { display: flex; gap: 6px; }
+    .tour-dot { width: 6px; height: 6px; background: var(--border); }
+    .tour-dot.active { background: var(--gold); }
 
     /* ═══ UPLOAD PROGRESS ═══ */
-    .upload-progress {
-      margin-top: 8px;
-      height: 3px;
-      background: var(--card);
-      border-radius: 100px;
-      overflow: hidden;
-      display: none;
-    }
-
+    .upload-progress { margin-top: 8px; height: 2px; background: var(--card); display: none; }
     .upload-progress.active { display: block; }
+    .upload-progress-fill { height: 100%; background: var(--gold); transition: width 0.3s; }
 
-    .upload-progress-fill {
-      height: 100%;
-      background: var(--accent);
-      border-radius: 100px;
-      transition: width 0.3s;
-    }
+    /* ═══ GOLD ACCENT LINE ═══ */
+    .gold-line { width: 40px; height: 1px; background: var(--gold); margin: 16px auto; }
   </style>
 </head>
 <body>
 
 <div class="container" id="app">
+  <div class="loading-screen" id="loadingScreen"><div class="spinner"></div><span style="color:var(--text-muted);font-size:12px;letter-spacing:0.1em;text-transform:uppercase">Wird geladen</span></div>
+  <div class="error-screen" id="errorScreen"><div class="error-code">404</div><div class="panel-title" style="margin-top:12px;">Projekt nicht gefunden</div><p style="color:var(--text-secondary);margin-top:8px;">Dieser Link ist ungültig oder abgelaufen.</p></div>
 
-  <!-- LOADING -->
-  <div class="loading-screen" id="loadingScreen">
-    <div class="spinner"></div>
-    <span style="color: var(--text-secondary); font-size: 13px;">Portal wird geladen...</span>
-  </div>
-
-  <!-- ERROR -->
-  <div class="error-screen" id="errorScreen">
-    <div class="error-code">404</div>
-    <div class="panel-title">Projekt nicht gefunden</div>
-    <p style="color: var(--text-secondary); margin-top: 8px;">Dieser Link ist ungültig oder abgelaufen.</p>
-  </div>
-
-  <!-- MAIN CONTENT (hidden until loaded) -->
   <div id="mainContent" style="display:none;">
-
-    <!-- Header -->
     <div class="portal-header">
       <div class="logo">ELE<span>V</span>O</div>
       <div class="portal-subtitle">Dein Projekt-Portal</div>
-      <div class="company-badge" id="companyBadge">Wird geladen...</div>
+      <div class="gold-line"></div>
+      <div class="company-badge" id="companyBadge">—</div>
     </div>
 
-    <!-- Progress -->
-    <div class="progress-section">
+    <div class="progress-section" id="progressSection">
       <div class="progress-header">
-        <div class="progress-title">Dein Fortschritt</div>
+        <div class="progress-title">Fortschritt</div>
         <div class="progress-percent" id="progressPercent">0%</div>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
       <div class="checklist" id="checklist"></div>
     </div>
 
-    <!-- Step Tabs -->
     <div class="steps-nav" id="stepsNav"></div>
 
-    <!-- Step 1: Unternehmen -->
+    <!-- STEP 1 -->
     <div class="step-panel" data-step="1">
-      <div class="panel-header">
-        <div class="panel-title">Dein Unternehmen</div>
-        <div class="panel-desc">Erzähl uns die Basics. Name, Kontakt, wo findet man euch?</div>
-      </div>
-
-      <div class="field">
-        <label>Firmenname</label>
-        <input type="text" name="company_name" placeholder="z.B. Ristorante Da Mario">
-      </div>
-
-      <div class="field">
-        <label>Branche</label>
-        <select name="industry">
-          <option value="">Bitte wählen...</option>
-          <option value="gastro">Gastronomie</option>
-          <option value="handwerk">Handwerk</option>
-          <option value="gesundheit">Gesundheit / Coaching</option>
-          <option value="it">IT / Tech</option>
-          <option value="dienstleister">Dienstleistung / Beratung</option>
-          <option value="einzelhandel">Einzelhandel</option>
-          <option value="sonstige">Sonstige</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label>Seit wann gibt es euch? <span class="optional">(optional)</span></label>
-        <input type="text" name="founded" placeholder="z.B. 2008 oder „Seit über 15 Jahren"">
-      </div>
-
+      <div class="panel-header"><div class="panel-title">Dein Unternehmen</div><div class="panel-desc">Die Basics — Name, Kontakt, Standort. Wir brauchen das für die Website und fürs Impressum.</div></div>
+      <div class="field"><label>Firmenname</label><input type="text" name="company_name" placeholder="z.B. Ristorante Da Mario"></div>
+      <div class="field"><label>Branche</label><select name="industry"><option value="">Bitte wählen…</option><option value="gastro">Gastronomie</option><option value="handwerk">Handwerk</option><option value="gesundheit">Gesundheit / Coaching</option><option value="it">IT / Tech</option><option value="dienstleister">Dienstleistung / Beratung</option><option value="einzelhandel">Einzelhandel</option><option value="sonstige">Sonstige</option></select></div>
+      <div class="field"><label>Seit wann gibt es euch? <span class="optional">(optional)</span></label><input type="text" name="founded" placeholder="z.B. 2008"></div>
       <div class="field-row">
-        <div class="field">
-          <label>Telefon</label>
-          <input type="tel" name="phone" placeholder="0241 1234567">
-        </div>
-        <div class="field">
-          <label>E-Mail</label>
-          <input type="email" name="email" placeholder="info@firma.de">
-        </div>
+        <div class="field"><label>Telefon</label><input type="tel" name="phone" placeholder="0241 1234567"></div>
+        <div class="field"><label>E-Mail</label><input type="email" name="email" placeholder="info@firma.de"></div>
       </div>
-
-      <div class="field">
-        <label>Adresse <span class="optional">(optional bei Online-Business)</span></label>
-        <input type="text" name="address" placeholder="Musterstraße 1, 52062 Aachen">
-      </div>
-
-      <div class="field">
-        <label>Öffnungszeiten <span class="optional">(optional)</span></label>
-        <div class="hours-grid" id="hoursGrid"></div>
-      </div>
-
-      <div class="field">
-        <label>Aktuelle Website <span class="optional">(falls vorhanden)</span></label>
-        <input type="url" name="current_website" placeholder="https://www.beispiel.de">
-      </div>
-
-      <div class="field">
-        <label>Social Media <span class="optional">(optional)</span></label>
-        <input type="text" name="social_media" placeholder="z.B. Instagram: @firmenname">
-      </div>
+      <div class="field"><label>Adresse <span class="optional">(optional bei Online-Business)</span></label><input type="text" name="address" placeholder="Musterstraße 1, 52062 Aachen"></div>
+      <div class="field"><label>Öffnungszeiten <span class="optional">(optional)</span></label><div class="hours-grid" id="hoursGrid"></div></div>
+      <div class="field"><label>Aktuelle Website <span class="optional">(falls vorhanden)</span></label><input type="url" name="current_website" placeholder="https://www.beispiel.de"></div>
+      <div class="field"><label>Social Media <span class="optional">(optional)</span></label><input type="text" name="social_media" placeholder="z.B. Instagram: @firmenname"></div>
     </div>
 
-    <!-- Step 2: Geschichte -->
+    <!-- STEP 2 -->
     <div class="step-panel" data-step="2">
-      <div class="panel-header">
-        <div class="panel-title">Eure Geschichte</div>
-        <div class="panel-desc">Was macht euch besonders? Hier geht's um das Warum hinter eurem Business — das überzeugt eure Kunden.</div>
-      </div>
-
-      <div class="field">
-        <label>Was macht ihr in einem Satz?</label>
-        <input type="text" name="one_liner" placeholder="z.B. Wir kochen authentische italienische Küche mit frischer Pasta.">
-        <div class="hint">Stell dir vor, jemand fragt dich im Aufzug. Was sagst du?</div>
-      </div>
-
-      <div class="field">
-        <label>Warum gibt es euer Unternehmen?</label>
-        <textarea name="why_story" placeholder="Was war der Auslöser? Eine persönliche Erfahrung? Ein ungelöstes Problem? Erzähl einfach drauflos."></textarea>
-        <div class="hint">Keine Sorge um Formulierungen — wir machen daraus eine Story.</div>
-      </div>
-
-      <div class="field">
-        <label>Was macht euch anders als die Konkurrenz?</label>
-        <textarea name="usp" placeholder="z.B. Jede Pasta wird morgens frisch von Hand gemacht. Oder: Festpreise vor Arbeitsbeginn."></textarea>
-      </div>
-
-      <div class="field">
-        <label>Slogan oder Claim <span class="optional">(falls vorhanden)</span></label>
-        <input type="text" name="slogan" placeholder="z.B. „Federleicht — Zurück zu dir."">
-      </div>
+      <div class="panel-header"><div class="panel-title">Eure Geschichte</div><div class="panel-desc">Was macht euch besonders? Hier geht's um das Warum — damit überzeugen wir eure Kunden.</div></div>
+      <div class="field"><label>Was macht ihr in einem Satz?</label><input type="text" name="one_liner" placeholder="z.B. Wir kochen authentische italienische Küche mit frischer Pasta."><div class="hint">Stell dir vor, jemand fragt dich im Aufzug.</div></div>
+      <div class="field"><label>Warum gibt es euer Unternehmen?</label><textarea name="why_story" placeholder="Was war der Auslöser? Erzähl einfach drauflos — wir machen daraus eine Story."></textarea></div>
+      <div class="field"><label>Was macht euch anders als die Konkurrenz?</label><textarea name="usp" placeholder="z.B. Jede Pasta wird morgens frisch von Hand gemacht."></textarea></div>
+      <div class="field"><label>Slogan oder Claim <span class="optional">(falls vorhanden)</span></label><input type="text" name="slogan" placeholder="z.B. „Federleicht — Zurück zu dir.""></div>
     </div>
 
-    <!-- Step 3: Kunden -->
+    <!-- STEP 3 -->
     <div class="step-panel" data-step="3">
-      <div class="panel-header">
-        <div class="panel-title">Eure Kunden</div>
-        <div class="panel-desc">Wer sind die Menschen, die bei euch kaufen oder buchen? Je besser wir sie verstehen, desto besser wird die Website.</div>
-      </div>
-
-      <div class="field">
-        <label>Wer sind eure typischen Kunden?</label>
-        <textarea name="target_group" placeholder="z.B. Familien mit Kindern, Paare zum Jubiläum, Studenten für die schnelle Pizza. Oder: Frauen 30-50 die unter Burnout leiden."></textarea>
-      </div>
-
-      <div class="field">
-        <label>Was googeln eure Kunden, wenn sie euch suchen?</label>
-        <textarea name="search_terms" placeholder="z.B. „italienisches Restaurant Aachen", „Pizza bestellen Aachen", „Elektriker Notdienst Aachen""></textarea>
-        <div class="hint">Nenne 2-3 Begriffe. Müssen nicht perfekt sein.</div>
-      </div>
-
-      <div class="field">
-        <label>Was ist das größte Problem eurer Kunden?</label>
-        <textarea name="customer_pain" placeholder="z.B. „Die finden keinen guten Handwerker dem sie vertrauen." Oder: „Sie sind dauerhaft erschöpft und wissen nicht weiter.""></textarea>
-      </div>
-
-      <div class="field">
-        <label>Lokal oder überregional?</label>
-        <div class="radio-group">
-          <label class="radio-option" data-value="lokal"><input type="radio" name="reach" value="lokal"> Lokal (Stadt + Umgebung)</label>
-          <label class="radio-option" data-value="regional"><input type="radio" name="reach" value="regional"> Regional</label>
-          <label class="radio-option" data-value="national"><input type="radio" name="reach" value="national"> National / Online</label>
-        </div>
-      </div>
+      <div class="panel-header"><div class="panel-title">Eure Kunden</div><div class="panel-desc">Je besser wir eure Kunden verstehen, desto besser wird die Website.</div></div>
+      <div class="field"><label>Wer sind eure typischen Kunden?</label><textarea name="target_group" placeholder="z.B. Familien mit Kindern, Paare, Studenten. Oder: Frauen 30-50 mit Burnout."></textarea></div>
+      <div class="field"><label>Was googeln eure Kunden?</label><textarea name="search_terms" placeholder="z.B. „italienisches Restaurant Aachen", „Elektriker Notdienst Aachen""></textarea><div class="hint">2–3 Begriffe reichen. Müssen nicht perfekt sein.</div></div>
+      <div class="field"><label>Was ist das größte Problem eurer Kunden?</label><textarea name="customer_pain" placeholder="z.B. „Finden keinen guten Handwerker dem sie vertrauen.""></textarea></div>
+      <div class="field"><label>Lokal oder überregional?</label><div class="radio-group"><label class="radio-option" data-value="lokal"><input type="radio" name="reach" value="lokal"> Lokal</label><label class="radio-option" data-value="regional"><input type="radio" name="reach" value="regional"> Regional</label><label class="radio-option" data-value="national"><input type="radio" name="reach" value="national"> National / Online</label></div></div>
     </div>
 
-    <!-- Step 4: Angebot -->
+    <!-- STEP 4 -->
     <div class="step-panel" data-step="4">
-      <div class="panel-header">
-        <div class="panel-title">Euer Angebot</div>
-        <div class="panel-desc">Was bietest du an? Nenn uns eure 3 wichtigsten Leistungen.</div>
-      </div>
-
-      <div class="field">
-        <label>Leistung 1</label>
-        <input type="text" name="service_1_name" placeholder="Name (z.B. Holzofen-Pizza)" style="margin-bottom: 8px;">
-        <input type="text" name="service_1_desc" placeholder="Kurze Beschreibung (1 Satz)">
-      </div>
-
-      <div class="field">
-        <label>Leistung 2</label>
-        <input type="text" name="service_2_name" placeholder="Name" style="margin-bottom: 8px;">
-        <input type="text" name="service_2_desc" placeholder="Kurze Beschreibung">
-      </div>
-
-      <div class="field">
-        <label>Leistung 3 <span class="optional">(optional)</span></label>
-        <input type="text" name="service_3_name" placeholder="Name" style="margin-bottom: 8px;">
-        <input type="text" name="service_3_desc" placeholder="Kurze Beschreibung">
-      </div>
-
-      <div class="field">
-        <label>Preise auf der Website zeigen?</label>
-        <div class="radio-group">
-          <label class="radio-option" data-value="yes"><input type="radio" name="show_prices" value="yes"> Ja, konkrete Preise</label>
-          <label class="radio-option" data-value="ab"><input type="radio" name="show_prices" value="ab"> „Ab"-Preise</label>
-          <label class="radio-option" data-value="no"><input type="radio" name="show_prices" value="no"> Nein, auf Anfrage</label>
-        </div>
-      </div>
-
-      <div class="field" id="pricesField" style="display:none;">
-        <label>Preisangaben</label>
-        <textarea name="prices" placeholder="Liste deine Preise auf, z.B.:\nHolzofen-Pizza: 9-14€\nPasta: 12-18€\nWein (Glas): ab 5€"></textarea>
-      </div>
+      <div class="panel-header"><div class="panel-title">Euer Angebot</div><div class="panel-desc">Die 3 wichtigsten Leistungen — mehr brauchen wir erstmal nicht.</div></div>
+      <div class="field"><label>Leistung 1</label><input type="text" name="service_1_name" placeholder="Name (z.B. Holzofen-Pizza)" style="margin-bottom:8px"><input type="text" name="service_1_desc" placeholder="Kurze Beschreibung (1 Satz)"></div>
+      <div class="field"><label>Leistung 2</label><input type="text" name="service_2_name" placeholder="Name" style="margin-bottom:8px"><input type="text" name="service_2_desc" placeholder="Kurze Beschreibung"></div>
+      <div class="field"><label>Leistung 3 <span class="optional">(optional)</span></label><input type="text" name="service_3_name" placeholder="Name" style="margin-bottom:8px"><input type="text" name="service_3_desc" placeholder="Kurze Beschreibung"></div>
+      <div class="field"><label>Preise zeigen?</label><div class="radio-group"><label class="radio-option" data-value="yes"><input type="radio" name="show_prices" value="yes"> Ja, konkret</label><label class="radio-option" data-value="ab"><input type="radio" name="show_prices" value="ab"> „Ab"-Preise</label><label class="radio-option" data-value="no"><input type="radio" name="show_prices" value="no"> Auf Anfrage</label></div></div>
+      <div class="field" id="pricesField" style="display:none"><label>Preisangaben</label><textarea name="prices" placeholder="z.B. Pizza: 9-14€ / Pasta: 12-18€"></textarea></div>
     </div>
 
-    <!-- Step 5: Kundenstimmen -->
+    <!-- STEP 5 -->
     <div class="step-panel" data-step="5">
-      <div class="panel-header">
-        <div class="panel-title">Kundenstimmen</div>
-        <div class="panel-desc">Echte Bewertungen sind Gold wert. Falls du noch keine hast — kein Problem, wir helfen dir.</div>
-      </div>
-
+      <div class="panel-header"><div class="panel-title">Kundenstimmen</div><div class="panel-desc">Echte Bewertungen sind Gold wert. Falls du noch keine hast — kein Problem.</div></div>
       <div class="field-row">
-        <div class="field">
-          <label>Google-Bewertung (Sterne)</label>
-          <select name="google_stars">
-            <option value="">—</option>
-            <option value="5.0">5.0 ★★★★★</option>
-            <option value="4.9">4.9 ★★★★★</option>
-            <option value="4.8">4.8 ★★★★★</option>
-            <option value="4.7">4.7 ★★★★☆</option>
-            <option value="4.5">4.5 ★★★★☆</option>
-            <option value="4.0">4.0 ★★★★☆</option>
-            <option value="none">Noch keine</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Anzahl Bewertungen</label>
-          <input type="number" name="google_count" placeholder="z.B. 85">
-        </div>
+        <div class="field"><label>Google-Bewertung</label><select name="google_stars"><option value="">—</option><option value="5.0">5.0 ★★★★★</option><option value="4.9">4.9 ★★★★★</option><option value="4.8">4.8 ★★★★★</option><option value="4.7">4.7 ★★★★☆</option><option value="4.5">4.5 ★★★★☆</option><option value="none">Noch keine</option></select></div>
+        <div class="field"><label>Anzahl Bewertungen</label><input type="number" name="google_count" placeholder="z.B. 85"></div>
       </div>
-
-      <div class="field">
-        <label>Kundenzitat 1 <span class="optional">(optional)</span></label>
-        <textarea name="testimonial_1" placeholder="Das Zitat, z.B.: „Beste Pizza in Aachen! Wir kommen immer wieder."" style="min-height: 60px; margin-bottom: 8px;"></textarea>
-        <input type="text" name="testimonial_1_name" placeholder="Name, z.B. Familie Müller">
-      </div>
-
-      <div class="field">
-        <label>Kundenzitat 2 <span class="optional">(optional)</span></label>
-        <textarea name="testimonial_2" placeholder="Weiteres Zitat..." style="min-height: 60px; margin-bottom: 8px;"></textarea>
-        <input type="text" name="testimonial_2_name" placeholder="Name">
-      </div>
-
-      <div class="field">
-        <label>Kundenzitat 3 <span class="optional">(optional)</span></label>
-        <textarea name="testimonial_3" placeholder="Weiteres Zitat..." style="min-height: 60px; margin-bottom: 8px;"></textarea>
-        <input type="text" name="testimonial_3_name" placeholder="Name">
-      </div>
-
-      <div class="field">
-        <label>Zahlen & Erfolge <span class="optional">(optional)</span></label>
-        <textarea name="stats" placeholder="z.B. Seit 2008, über 500 Kunden, 4.8★ bei Google, 15 Jahre Erfahrung" style="min-height: 60px;"></textarea>
-      </div>
+      <div class="field"><label>Kundenzitat 1 <span class="optional">(optional)</span></label><textarea name="testimonial_1" placeholder="Das Zitat…" style="min-height:60px;margin-bottom:8px"></textarea><input type="text" name="testimonial_1_name" placeholder="Name, z.B. Familie Müller"></div>
+      <div class="field"><label>Kundenzitat 2 <span class="optional">(optional)</span></label><textarea name="testimonial_2" placeholder="Weiteres Zitat…" style="min-height:60px;margin-bottom:8px"></textarea><input type="text" name="testimonial_2_name" placeholder="Name"></div>
+      <div class="field"><label>Kundenzitat 3 <span class="optional">(optional)</span></label><textarea name="testimonial_3" placeholder="Weiteres Zitat…" style="min-height:60px;margin-bottom:8px"></textarea><input type="text" name="testimonial_3_name" placeholder="Name"></div>
+      <div class="field"><label>Zahlen & Erfolge <span class="optional">(optional)</span></label><textarea name="stats" placeholder="z.B. Seit 2008, über 500 Kunden, 4.8★ bei Google" style="min-height:60px"></textarea></div>
     </div>
 
-    <!-- Step 6: Uploads -->
+    <!-- STEP 6 -->
     <div class="step-panel" data-step="6">
-      <div class="panel-header">
-        <div class="panel-title">Dateien hochladen</div>
-        <div class="panel-desc">Logo, Fotos, alles was wir für deine Website brauchen. Du kannst auch später noch Dateien ergänzen.</div>
-      </div>
-
+      <div class="panel-header"><div class="panel-title">Dateien hochladen</div><div class="panel-desc">Logo, Fotos, alles was wir brauchen. Du kannst jederzeit zurückkommen und ergänzen.</div></div>
       <div class="upload-categories" id="uploadCategories">
-
-        <div class="upload-cat" data-category="logo">
-          <div class="upload-cat-header">
-            <div class="upload-cat-title">Logo <span class="badge required">Wichtig</span></div>
-            <div class="upload-cat-count" data-count="logo">Keine Dateien</div>
-          </div>
-          <div class="upload-cat-body">
-            <div class="dropzone" data-category="logo">
-              <div class="dropzone-text"><strong>Klicken</strong> oder Dateien hierher ziehen</div>
-              <div class="dropzone-hint">PNG, SVG, JPG — am besten mit transparentem Hintergrund</div>
-            </div>
-            <div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div>
-            <div class="file-list" data-category="logo"></div>
-          </div>
-        </div>
-
-        <div class="upload-cat" data-category="team">
-          <div class="upload-cat-header">
-            <div class="upload-cat-title">Team- & Portraitfotos</div>
-            <div class="upload-cat-count" data-count="team">Keine Dateien</div>
-          </div>
-          <div class="upload-cat-body">
-            <div class="dropzone" data-category="team">
-              <div class="dropzone-text"><strong>Klicken</strong> oder Dateien hierher ziehen</div>
-              <div class="dropzone-hint">Fotos von euch, eurem Team — am liebsten bei der Arbeit</div>
-            </div>
-            <div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div>
-            <div class="file-list" data-category="team"></div>
-          </div>
-        </div>
-
-        <div class="upload-cat" data-category="space">
-          <div class="upload-cat-header">
-            <div class="upload-cat-title">Räumlichkeiten / Standort</div>
-            <div class="upload-cat-count" data-count="space">Keine Dateien</div>
-          </div>
-          <div class="upload-cat-body">
-            <div class="dropzone" data-category="space">
-              <div class="dropzone-text"><strong>Klicken</strong> oder Dateien hierher ziehen</div>
-              <div class="dropzone-hint">Innenraum, Außenansicht, Arbeitsplatz, Praxisräume</div>
-            </div>
-            <div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div>
-            <div class="file-list" data-category="space"></div>
-          </div>
-        </div>
-
-        <div class="upload-cat" data-category="work">
-          <div class="upload-cat-header">
-            <div class="upload-cat-title">Produkte / Arbeit / Projekte</div>
-            <div class="upload-cat-count" data-count="work">Keine Dateien</div>
-          </div>
-          <div class="upload-cat-body">
-            <div class="dropzone" data-category="work">
-              <div class="dropzone-text"><strong>Klicken</strong> oder Dateien hierher ziehen</div>
-              <div class="dropzone-hint">Gerichte, fertige Projekte, Vorher/Nachher — alles was ihr zeigen wollt</div>
-            </div>
-            <div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div>
-            <div class="file-list" data-category="work"></div>
-          </div>
-        </div>
-
-        <div class="upload-cat" data-category="other">
-          <div class="upload-cat-header">
-            <div class="upload-cat-title">Sonstige Dateien</div>
-            <div class="upload-cat-count" data-count="other">Keine Dateien</div>
-          </div>
-          <div class="upload-cat-body">
-            <div class="dropzone" data-category="other">
-              <div class="dropzone-text"><strong>Klicken</strong> oder Dateien hierher ziehen</div>
-              <div class="dropzone-hint">Speisekarten, Broschüren, PDFs, Videos</div>
-            </div>
-            <div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div>
-            <div class="file-list" data-category="other"></div>
-          </div>
-        </div>
-
+        <div class="upload-cat" data-category="logo"><div class="upload-cat-header"><div class="upload-cat-title">Logo <span class="badge required">Wichtig</span></div><div class="upload-cat-count" data-count="logo">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="logo"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">PNG, SVG, JPG — am besten mit transparentem Hintergrund</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="logo"></div></div></div>
+        <div class="upload-cat" data-category="team"><div class="upload-cat-header"><div class="upload-cat-title">Team- & Portraitfotos <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="team">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="team"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">Fotos von euch — am liebsten bei der Arbeit</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="team"></div></div></div>
+        <div class="upload-cat" data-category="space"><div class="upload-cat-header"><div class="upload-cat-title">Räumlichkeiten <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="space">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="space"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">Innenraum, Außenansicht, Praxis, Werkstatt</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="space"></div></div></div>
+        <div class="upload-cat" data-category="work"><div class="upload-cat-header"><div class="upload-cat-title">Produkte & Projekte <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="work">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="work"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">Gerichte, fertige Projekte, Vorher/Nachher</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="work"></div></div></div>
+        <div class="upload-cat" data-category="other"><div class="upload-cat-header"><div class="upload-cat-title">Sonstiges <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="other">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="other"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">Speisekarten, PDFs, Videos, alles andere</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="other"></div></div></div>
       </div>
     </div>
 
-    <!-- Success Screen -->
-    <div class="success-screen" id="successScreen">
-      <div class="success-icon">✓</div>
-      <div class="success-title">Alles abgeschickt!</div>
-      <p class="success-text">
-        Danke! Wir haben alles, was wir brauchen.<br>
-        Du kannst diesen Link jederzeit öffnen und noch Dateien ergänzen oder Angaben ändern.
-        <br><br>
-        Wir melden uns in Kürze bei dir.
-      </p>
-    </div>
+    <div class="success-screen" id="successScreen"><div class="success-icon">✓</div><div class="success-title">Perfekt.</div><div class="gold-line"></div><p class="success-text">Wir haben alles was wir brauchen. Du kannst diesen Link jederzeit öffnen und Dateien ergänzen oder Angaben ändern.<br><br>Wir melden uns in Kürze.</p></div>
 
-    <!-- Step Navigation -->
-    <div class="step-actions" id="stepActions">
-      <button class="btn btn-secondary" id="btnPrev" disabled>← Zurück</button>
-      <button class="btn btn-primary" id="btnNext">Weiter →</button>
-    </div>
-
-    <div class="portal-footer">
-      Powered by <a href="https://elevo.solutions" target="_blank">ELEVO</a>
-    </div>
+    <div class="step-actions" id="stepActions"><button class="btn btn-secondary" id="btnPrev" disabled>← Zurück</button><button class="btn btn-primary" id="btnNext">Weiter →</button></div>
+    <div class="portal-footer">Powered by <a href="https://elevo.solutions" target="_blank">ELEVO</a></div>
   </div>
 </div>
 
-<!-- Toast -->
+<!-- Tour -->
+<div class="tour-overlay" id="tourOverlay"></div>
+<div class="tour-spotlight" id="tourSpotlight" style="display:none"></div>
+<div class="tour-tooltip" id="tourTooltip" style="display:none">
+  <div class="tour-step-indicator" id="tourIndicator"></div>
+  <div class="tour-title" id="tourTitle"></div>
+  <div class="tour-desc" id="tourDesc"></div>
+  <div class="tour-actions"><button class="tour-skip" id="tourSkip">Überspringen</button><div class="tour-dots" id="tourDots"></div><button class="tour-next" id="tourNext">Weiter</button></div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
 (function() {
-  // ═══════════════════════════════════════
-  // STATE
-  // ═══════════════════════════════════════
   const TOKEN = window.location.pathname.split('/p/')[1];
   let currentStep = 1;
   const totalSteps = 6;
   let projectData = null;
 
   const steps = [
-    { num: 1, label: 'Unternehmen' },
-    { num: 2, label: 'Geschichte' },
+    { num: 1, label: 'Firma' },
+    { num: 2, label: 'Story' },
     { num: 3, label: 'Kunden' },
     { num: 4, label: 'Angebot' },
     { num: 5, label: 'Stimmen' },
     { num: 6, label: 'Dateien' },
   ];
 
-  // ═══════════════════════════════════════
-  // INIT
-  // ═══════════════════════════════════════
+  // ═══ ONBOARDING TOUR ═══
+  const tourSteps = [
+    { target: '#progressSection', title: 'Dein Fortschritt', desc: 'Hier siehst du auf einen Blick, was noch fehlt. Die Checkliste aktualisiert sich automatisch, wenn du Angaben machst oder Dateien hochlädst.', pos: 'below' },
+    { target: '#stepsNav', title: '6 kurze Schritte', desc: 'Klick dich durch die Tabs — von den Basics über eure Geschichte bis zum Datei-Upload. Du kannst jederzeit hin und her springen.', pos: 'below' },
+    { target: '.step-panel[data-step="1"]', title: 'Einfach ausfüllen', desc: 'Trag ein was du weißt. Felder mit „optional" kannst du skippen. Alles wird automatisch gespeichert — du kannst jederzeit zurückkommen.', pos: 'above' },
+    { target: '#stepActions', title: 'Fertig? Weiter.', desc: 'Klick „Weiter" wenn du mit einem Schritt fertig bist. Am Ende bekommst du eine Bestätigung und wir legen los.', pos: 'above' },
+  ];
+
+  let tourIndex = 0;
+
+  function startTour() {
+    const seen = localStorage.getItem(`elevo_tour_${TOKEN}`);
+    if (seen) return;
+    tourIndex = 0;
+    showTourStep();
+  }
+
+  function showTourStep() {
+    if (tourIndex >= tourSteps.length) { endTour(); return; }
+    const step = tourSteps[tourIndex];
+    const el = document.querySelector(step.target);
+    if (!el) { tourIndex++; showTourStep(); return; }
+
+    const overlay = document.getElementById('tourOverlay');
+    const spotlight = document.getElementById('tourSpotlight');
+    const tooltip = document.getElementById('tourTooltip');
+
+    overlay.classList.add('active');
+    spotlight.style.display = 'block';
+    tooltip.style.display = 'block';
+
+    const rect = el.getBoundingClientRect();
+    const pad = 8;
+    spotlight.style.top = (rect.top + window.scrollY - pad) + 'px';
+    spotlight.style.left = (rect.left - pad) + 'px';
+    spotlight.style.width = (rect.width + pad * 2) + 'px';
+    spotlight.style.height = (rect.height + pad * 2) + 'px';
+
+    document.getElementById('tourIndicator').textContent = `Schritt ${tourIndex + 1} von ${tourSteps.length}`;
+    document.getElementById('tourTitle').textContent = step.title;
+    document.getElementById('tourDesc').textContent = step.desc;
+
+    const dots = document.getElementById('tourDots');
+    dots.innerHTML = tourSteps.map((_, i) => `<div class="tour-dot ${i === tourIndex ? 'active' : ''}"></div>`).join('');
+
+    if (step.pos === 'below') {
+      tooltip.style.top = (rect.bottom + window.scrollY + 16) + 'px';
+    } else {
+      tooltip.style.top = (rect.top + window.scrollY - tooltip.offsetHeight - 16) + 'px';
+    }
+    tooltip.style.left = Math.max(20, rect.left) + 'px';
+    tooltip.style.right = 'auto';
+
+    const btnNext = document.getElementById('tourNext');
+    btnNext.textContent = tourIndex === tourSteps.length - 1 ? 'Los geht\'s' : 'Weiter';
+
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function endTour() {
+    document.getElementById('tourOverlay').classList.remove('active');
+    document.getElementById('tourSpotlight').style.display = 'none';
+    document.getElementById('tourTooltip').style.display = 'none';
+    localStorage.setItem(`elevo_tour_${TOKEN}`, '1');
+  }
+
+  document.getElementById('tourNext').onclick = () => { tourIndex++; showTourStep(); };
+  document.getElementById('tourSkip').onclick = endTour;
+
+  // ═══ INIT ═══
   async function init() {
     if (!TOKEN) return showError();
-
     try {
       const res = await fetch(`/api/portal/${TOKEN}`);
       if (!res.ok) throw new Error();
       projectData = await res.json();
-
       document.getElementById('companyBadge').textContent = projectData.company_name;
       document.getElementById('loadingScreen').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
-
-      buildStepsNav();
-      buildHoursGrid();
-      initRadioGroups();
-      initDropzones();
-      initPriceToggle();
-      restoreBriefingData();
-      restoreUploads();
-      updateProgress();
-      showStep(1);
-    } catch (e) {
-      showError();
-    }
+      buildStepsNav(); buildHoursGrid(); initRadioGroups(); initDropzones(); initPriceToggle();
+      restoreBriefingData(); restoreUploads(); updateProgress(); showStep(1);
+      setTimeout(startTour, 600);
+    } catch (e) { showError(); }
   }
 
   function showError() {
@@ -1102,373 +403,198 @@
     document.getElementById('errorScreen').style.display = 'block';
   }
 
-  // ═══════════════════════════════════════
-  // STEPS NAV
-  // ═══════════════════════════════════════
+  // ═══ NAV ═══
   function buildStepsNav() {
-    const nav = document.getElementById('stepsNav');
-    nav.innerHTML = steps.map(s => `
-      <div class="step-tab" data-step="${s.num}" onclick="window._goToStep(${s.num})">
-        <span class="step-num">${s.num}</span>
-        ${s.label}
-      </div>
-    `).join('');
+    document.getElementById('stepsNav').innerHTML = steps.map(s =>
+      `<div class="step-tab" data-step="${s.num}" onclick="window._go(${s.num})"><span class="step-num">${s.num}</span>${s.label}</div>`
+    ).join('');
   }
 
-  window._goToStep = function(n) {
-    // Save current step first
-    saveBriefingStep(currentStep);
-    showStep(n);
-  };
+  window._go = n => { saveBriefingStep(currentStep); showStep(n); };
 
   function showStep(n) {
     currentStep = n;
-
     document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.step-tab').forEach(t => t.classList.remove('active'));
-
     const panel = document.querySelector(`.step-panel[data-step="${n}"]`);
     const tab = document.querySelector(`.step-tab[data-step="${n}"]`);
-
     if (panel) panel.classList.add('active');
     if (tab) tab.classList.add('active');
-
-    // Buttons
     document.getElementById('btnPrev').disabled = n === 1;
-    const btnNext = document.getElementById('btnNext');
-
-    if (n === totalSteps) {
-      btnNext.innerHTML = 'Fertig ✓';
-    } else {
-      btnNext.innerHTML = 'Weiter →';
-    }
-
-    // Show/hide actions and success
-    const actions = document.getElementById('stepActions');
-    const success = document.getElementById('successScreen');
-    actions.style.display = 'flex';
-    success.classList.remove('active');
-
-    updateStepTabStates();
+    document.getElementById('btnNext').innerHTML = n === totalSteps ? 'Fertig ✓' : 'Weiter →';
+    document.getElementById('stepActions').style.display = 'flex';
+    document.getElementById('successScreen').classList.remove('active');
+    updateStepTabs();
   }
 
-  function updateStepTabStates() {
+  function updateStepTabs() {
     document.querySelectorAll('.step-tab').forEach(tab => {
-      const step = parseInt(tab.dataset.step);
-      if (step < 6 && projectData.briefing[step]) {
-        tab.classList.add('completed');
-      }
-      // Check uploads for step 6
-      if (step === 6 && projectData.uploads && projectData.uploads.length > 0) {
-        tab.classList.add('completed');
-      }
+      const s = parseInt(tab.dataset.step);
+      tab.classList.toggle('completed', s < 6 ? !!projectData.briefing[s] : projectData.uploads?.length > 0);
     });
   }
 
-  // Navigation buttons
-  document.getElementById('btnPrev').onclick = () => {
-    saveBriefingStep(currentStep);
-    if (currentStep > 1) showStep(currentStep - 1);
-  };
-
+  document.getElementById('btnPrev').onclick = () => { saveBriefingStep(currentStep); if (currentStep > 1) showStep(currentStep - 1); };
   document.getElementById('btnNext').onclick = async () => {
     await saveBriefingStep(currentStep);
-    if (currentStep < totalSteps) {
-      showStep(currentStep + 1);
-    } else {
-      // Final — show success
+    if (currentStep < totalSteps) { showStep(currentStep + 1); } else {
       document.getElementById('stepActions').style.display = 'none';
       document.getElementById('successScreen').classList.add('active');
       document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
     }
   };
 
-  // ═══════════════════════════════════════
-  // BRIEFING DATA
-  // ═══════════════════════════════════════
+  // ═══ BRIEFING ═══
   function getStepData(step) {
     const panel = document.querySelector(`.step-panel[data-step="${step}"]`);
     if (!panel) return {};
     const data = {};
-
-    panel.querySelectorAll('input, textarea, select').forEach(el => {
-      if (el.name && el.type !== 'radio') {
-        data[el.name] = el.value;
-      }
-    });
-
-    // Radio buttons
-    panel.querySelectorAll('.radio-option.selected input[type="radio"]').forEach(el => {
-      data[el.name] = el.value;
-    });
-
+    panel.querySelectorAll('input, textarea, select').forEach(el => { if (el.name && el.type !== 'radio') data[el.name] = el.value; });
+    panel.querySelectorAll('.radio-option.selected input[type="radio"]').forEach(el => { data[el.name] = el.value; });
     return data;
   }
 
   async function saveBriefingStep(step) {
-    if (step === 6) return; // Uploads are saved separately
+    if (step === 6) return;
     const data = getStepData(step);
-    if (!Object.values(data).some(v => v)) return; // Skip if empty
-
+    if (!Object.values(data).some(v => v)) return;
     try {
-      await fetch(`/api/portal/${TOKEN}/briefing/${step}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      await fetch(`/api/portal/${TOKEN}/briefing/${step}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
       projectData.briefing[step] = data;
-      updateProgress();
-      updateStepTabStates();
-    } catch (e) {
-      console.error('Save error:', e);
-    }
+      updateProgress(); updateStepTabs();
+    } catch (e) {}
   }
 
   function restoreBriefingData() {
     for (const [step, data] of Object.entries(projectData.briefing)) {
       const panel = document.querySelector(`.step-panel[data-step="${step}"]`);
       if (!panel || !data) continue;
-
       for (const [key, value] of Object.entries(data)) {
         const el = panel.querySelector(`[name="${key}"]`);
         if (!el) continue;
-
         if (el.type === 'radio') {
-          // Handle radio via radio-option
-          const option = panel.querySelector(`.radio-option[data-value="${value}"]`);
-          if (option) {
-            option.classList.add('selected');
-            option.querySelector('input').checked = true;
-          }
-        } else {
-          el.value = value;
-        }
+          const opt = panel.querySelector(`.radio-option[data-value="${value}"]`);
+          if (opt) { opt.classList.add('selected'); opt.querySelector('input').checked = true; }
+        } else { el.value = value; }
       }
     }
-
-    // Trigger price field visibility
-    const priceRadio = document.querySelector('.radio-option.selected input[name="show_prices"]');
-    if (priceRadio && (priceRadio.value === 'yes' || priceRadio.value === 'ab')) {
-      document.getElementById('pricesField').style.display = 'block';
-    }
+    const pr = document.querySelector('.radio-option.selected input[name="show_prices"]');
+    if (pr && (pr.value === 'yes' || pr.value === 'ab')) document.getElementById('pricesField').style.display = 'block';
   }
 
-  // ═══════════════════════════════════════
-  // HOURS GRID
-  // ═══════════════════════════════════════
+  // ═══ HOURS ═══
   function buildHoursGrid() {
-    const grid = document.getElementById('hoursGrid');
-    const days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-    grid.innerHTML = days.map(d => `
-      <span class="day-label">${d}</span>
-      <input type="text" name="hours_${d.toLowerCase()}_open" placeholder="09:00">
-      <span class="sep">–</span>
-      <input type="text" name="hours_${d.toLowerCase()}_close" placeholder="18:00">
-    `).join('');
+    document.getElementById('hoursGrid').innerHTML = ['Mo','Di','Mi','Do','Fr','Sa','So'].map(d =>
+      `<span class="day-label">${d}</span><input type="text" name="hours_${d.toLowerCase()}_open" placeholder="09:00"><span class="sep">–</span><input type="text" name="hours_${d.toLowerCase()}_close" placeholder="18:00">`
+    ).join('');
   }
 
-  // ═══════════════════════════════════════
-  // RADIO GROUPS
-  // ═══════════════════════════════════════
+  // ═══ RADIO ═══
   function initRadioGroups() {
     document.querySelectorAll('.radio-option').forEach(opt => {
       opt.addEventListener('click', () => {
-        const group = opt.closest('.radio-group');
-        group.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+        opt.closest('.radio-group').querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
         opt.querySelector('input').checked = true;
       });
     });
   }
 
-  // ═══════════════════════════════════════
-  // PRICE TOGGLE
-  // ═══════════════════════════════════════
   function initPriceToggle() {
-    document.querySelectorAll('input[name="show_prices"]').forEach(radio => {
-      radio.closest('.radio-option').addEventListener('click', () => {
-        const val = radio.value;
-        document.getElementById('pricesField').style.display = (val === 'yes' || val === 'ab') ? 'block' : 'none';
+    document.querySelectorAll('input[name="show_prices"]').forEach(r => {
+      r.closest('.radio-option').addEventListener('click', () => {
+        document.getElementById('pricesField').style.display = (r.value === 'yes' || r.value === 'ab') ? 'block' : 'none';
       });
     });
   }
 
-  // ═══════════════════════════════════════
-  // FILE UPLOADS
-  // ═══════════════════════════════════════
+  // ═══ UPLOADS ═══
   function initDropzones() {
     document.querySelectorAll('.dropzone').forEach(zone => {
       const cat = zone.dataset.category;
-      const fileInput = document.createElement('input');
-      fileInput.type = 'file';
-      fileInput.multiple = true;
-      fileInput.accept = 'image/*,.pdf,.doc,.docx,.mp4,.mov,.svg';
-      fileInput.style.display = 'none';
-      zone.appendChild(fileInput);
-
-      zone.addEventListener('click', () => fileInput.click());
-
+      const fi = document.createElement('input');
+      fi.type = 'file'; fi.multiple = true; fi.accept = 'image/*,.pdf,.doc,.docx,.mp4,.mov,.svg'; fi.style.display = 'none';
+      zone.appendChild(fi);
+      zone.addEventListener('click', () => fi.click());
       zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
       zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
-      zone.addEventListener('drop', e => {
-        e.preventDefault();
-        zone.classList.remove('dragover');
-        uploadFiles(e.dataTransfer.files, cat);
-      });
-
-      fileInput.addEventListener('change', () => {
-        if (fileInput.files.length) uploadFiles(fileInput.files, cat);
-        fileInput.value = '';
-      });
+      zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dragover'); uploadFiles(e.dataTransfer.files, cat); });
+      fi.addEventListener('change', () => { if (fi.files.length) uploadFiles(fi.files, cat); fi.value = ''; });
     });
   }
 
   async function uploadFiles(files, category) {
-    const formData = new FormData();
-    formData.append('category', category);
-    for (const f of files) formData.append('files', f);
-
+    const fd = new FormData();
+    fd.append('category', category);
+    for (const f of files) fd.append('files', f);
     const catEl = document.querySelector(`.upload-cat[data-category="${category}"]`);
-    const progress = catEl.querySelector('.upload-progress');
-    const progressFill = catEl.querySelector('.upload-progress-fill');
-    progress.classList.add('active');
-    progressFill.style.width = '30%';
-
+    const prog = catEl.querySelector('.upload-progress');
+    const fill = catEl.querySelector('.upload-progress-fill');
+    prog.classList.add('active'); fill.style.width = '30%';
     try {
-      const res = await fetch(`/api/portal/${TOKEN}/upload`, { method: 'POST', body: formData });
-      progressFill.style.width = '100%';
-
-      if (!res.ok) {
-        const err = await res.json();
-        showToast(err.error || 'Upload fehlgeschlagen', 'error');
-        return;
-      }
-
+      const res = await fetch(`/api/portal/${TOKEN}/upload`, { method: 'POST', body: fd });
+      fill.style.width = '100%';
+      if (!res.ok) { const err = await res.json(); showToast(err.error || 'Fehler', 'error'); return; }
       const data = await res.json();
       showToast(`${data.uploaded.length} Datei(en) hochgeladen`, 'success');
-
-      // Refresh data
-      const portalRes = await fetch(`/api/portal/${TOKEN}`);
-      projectData = await portalRes.json();
-      restoreUploads();
-      updateProgress();
-      updateStepTabStates();
-    } catch (e) {
-      showToast('Upload fehlgeschlagen', 'error');
-    } finally {
-      setTimeout(() => { progress.classList.remove('active'); progressFill.style.width = '0%'; }, 500);
-    }
+      const pr = await fetch(`/api/portal/${TOKEN}`);
+      projectData = await pr.json();
+      restoreUploads(); updateProgress(); updateStepTabs();
+    } catch (e) { showToast('Upload fehlgeschlagen', 'error'); }
+    finally { setTimeout(() => { prog.classList.remove('active'); fill.style.width = '0%'; }, 500); }
   }
 
   function restoreUploads() {
     if (!projectData.uploads) return;
-
-    // Clear all file lists
-    document.querySelectorAll('.file-list').forEach(list => list.innerHTML = '');
-
-    // Group by category
+    document.querySelectorAll('.file-list').forEach(l => l.innerHTML = '');
     const groups = {};
-    projectData.uploads.forEach(u => {
-      if (!groups[u.category]) groups[u.category] = [];
-      groups[u.category].push(u);
-    });
-
+    projectData.uploads.forEach(u => { if (!groups[u.category]) groups[u.category] = []; groups[u.category].push(u); });
     for (const [cat, files] of Object.entries(groups)) {
       const list = document.querySelector(`.file-list[data-category="${cat}"]`);
-      const countEl = document.querySelector(`[data-count="${cat}"]`);
+      const cEl = document.querySelector(`[data-count="${cat}"]`);
       if (!list) continue;
-
-      if (countEl) countEl.textContent = `${files.length} Datei${files.length > 1 ? 'en' : ''}`;
-
+      if (cEl) cEl.textContent = `${files.length} Datei${files.length > 1 ? 'en' : ''}`;
       files.forEach(f => {
-        const isImage = f.mime_type && f.mime_type.startsWith('image/');
-        const size = formatSize(f.size);
+        const isImg = f.mime_type?.startsWith('image/');
         const item = document.createElement('div');
         item.className = 'file-item';
-        item.innerHTML = `
-          <div class="file-item-info">
-            ${isImage ? `<div style="width:32px;height:32px;background:var(--card);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">🖼</div>` : `<div style="width:32px;height:32px;background:var(--card);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">📄</div>`}
-            <span class="file-item-name">${f.original_name}</span>
-            <span class="file-item-size">${size}</span>
-          </div>
-          <button class="file-item-delete" onclick="window._deleteFile(${f.id}, '${cat}')" title="Löschen">×</button>
-        `;
+        item.innerHTML = `<div class="file-item-info"><div class="file-item-icon">${isImg ? '◻' : '◻'}</div><span class="file-item-name">${f.original_name}</span><span class="file-item-size">${formatSize(f.size)}</span></div><button class="file-item-delete" onclick="window._del(${f.id},'${cat}')" title="Löschen">×</button>`;
         list.appendChild(item);
       });
     }
-
-    // Update counts for empty categories
-    ['logo', 'team', 'space', 'work', 'other'].forEach(cat => {
-      if (!groups[cat]) {
-        const countEl = document.querySelector(`[data-count="${cat}"]`);
-        if (countEl) countEl.textContent = 'Keine Dateien';
-      }
-    });
+    ['logo','team','space','work','other'].forEach(c => { if (!groups[c]) { const el = document.querySelector(`[data-count="${c}"]`); if (el) el.textContent = '—'; } });
   }
 
-  window._deleteFile = async function(id, category) {
+  window._del = async (id, cat) => {
     try {
       await fetch(`/api/portal/${TOKEN}/upload/${id}`, { method: 'DELETE' });
-      const portalRes = await fetch(`/api/portal/${TOKEN}`);
-      projectData = await portalRes.json();
-      restoreUploads();
-      updateProgress();
-      showToast('Datei gelöscht', 'success');
-    } catch (e) {
-      showToast('Fehler beim Löschen', 'error');
-    }
+      const pr = await fetch(`/api/portal/${TOKEN}`);
+      projectData = await pr.json();
+      restoreUploads(); updateProgress(); showToast('Gelöscht', 'success');
+    } catch (e) { showToast('Fehler', 'error'); }
   };
 
-  // ═══════════════════════════════════════
-  // PROGRESS
-  // ═══════════════════════════════════════
+  // ═══ PROGRESS ═══
   function updateProgress() {
-    const checklist = projectData.checklist || [];
-    const completed = checklist.filter(c => c.completed).length;
-    const total = checklist.length || 1;
-    const percent = Math.round((completed / total) * 100);
-
-    document.getElementById('progressPercent').textContent = `${percent}%`;
-    document.getElementById('progressFill').style.width = `${percent}%`;
-
-    const checklistEl = document.getElementById('checklist');
-    checklistEl.innerHTML = checklist.map(c => `
-      <div class="checklist-item ${c.completed ? 'done' : ''}">
-        <div class="checklist-icon ${c.completed ? 'done' : 'pending'}">${c.completed ? '✓' : '○'}</div>
-        <span>${c.item}</span>
-      </div>
-    `).join('');
+    const cl = projectData.checklist || [];
+    const done = cl.filter(c => c.completed).length;
+    const pct = cl.length > 0 ? Math.round((done / cl.length) * 100) : 0;
+    document.getElementById('progressPercent').textContent = `${pct}%`;
+    document.getElementById('progressFill').style.width = `${pct}%`;
+    document.getElementById('checklist').innerHTML = cl.map(c =>
+      `<div class="checklist-item ${c.completed ? 'done' : ''}"><div class="checklist-icon ${c.completed ? 'done' : ''}">${c.completed ? '✓' : ''}</div><span>${c.item}</span></div>`
+    ).join('');
   }
 
-  // ═══════════════════════════════════════
-  // UTILS
-  // ═══════════════════════════════════════
-  function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-  }
+  // ═══ UTILS ═══
+  function formatSize(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b/1024).toFixed(0) + ' KB'; return (b/1048576).toFixed(1) + ' MB'; }
+  function showToast(msg, type = 'success') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast ${type} show`; setTimeout(() => t.classList.remove('show'), 3000); }
 
-  function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = `toast ${type} show`;
-    setTimeout(() => toast.classList.remove('show'), 3000);
-  }
-
-  // Auto-save on input change (debounced)
   let saveTimer;
-  document.addEventListener('input', () => {
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => saveBriefingStep(currentStep), 2000);
-  });
+  document.addEventListener('input', () => { clearTimeout(saveTimer); saveTimer = setTimeout(() => saveBriefingStep(currentStep), 2000); });
 
-  // ═══════════════════════════════════════
-  // GO
-  // ═══════════════════════════════════════
   init();
 })();
 </script>
-
 </body>
 </html>

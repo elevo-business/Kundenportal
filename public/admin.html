@@ -3,828 +3,268 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ELEVO — Admin Portal</title>
+  <title>ELEVO — Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--bg:#09090B;--surface:#111114;--card:#18181B;--border:#27272A;--border-hover:#3F3F46;--text:#FAFAFA;--text-secondary:#A1A1AA;--text-muted:#52525B;--gold:#D4A853;--gold-hover:#E8C97A;--gold-glow:rgba(212,168,83,0.10);--gold-muted:#A68B3C;--success:#22C55E;--success-bg:rgba(34,197,94,0.08);--warning:#F59E0B;--danger:#EF4444;--font-display:'Cormorant Garamond',Georgia,serif;--font-body:'Archivo','Helvetica Neue',sans-serif}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+    .container{max-width:960px;margin:0 auto;padding:24px 20px}
 
-    :root {
-      --bg: #0A0A0C;
-      --surface: #111115;
-      --card: #18181D;
-      --border: #2A2A32;
-      --border-hover: #3A3A45;
-      --text: #EEEEF0;
-      --text-secondary: #8A8A99;
-      --text-muted: #55555F;
-      --accent: #6C5CE7;
-      --accent-hover: #5A4BD6;
-      --accent-glow: rgba(108, 92, 231, 0.15);
-      --success: #00D68F;
-      --success-bg: rgba(0, 214, 143, 0.1);
-      --warning: #FFB347;
-      --danger: #FF6B6B;
-      --radius: 12px;
-      --radius-sm: 8px;
-      --font-display: 'Space Grotesk', sans-serif;
-      --font-body: 'Inter', sans-serif;
-    }
+    /* LOGIN */
+    .login-screen{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+    .login-card{background:var(--surface);border:1px solid var(--border);padding:48px 40px;width:100%;max-width:380px;text-align:center}
+    .login-card .logo{font-family:var(--font-body);font-size:18px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:4px}
+    .login-card .logo span{color:var(--gold)}
+    .login-card .subtitle{font-family:var(--font-display);font-size:18px;color:var(--text-secondary);font-style:italic;margin-bottom:32px}
+    .login-card input{width:100%;padding:12px 14px;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;margin-bottom:16px}
+    .login-card input:focus{border-color:var(--gold)}
+    .login-error{color:var(--danger);font-size:13px;margin-bottom:12px;display:none}
 
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
+    /* HEADER */
+    .admin-header{display:flex;justify-content:space-between;align-items:center;padding:24px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px}
+    .admin-header .logo{font-family:var(--font-body);font-size:16px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase}
+    .admin-header .logo span{color:var(--gold)}
+    .admin-header .logo small{font-size:11px;color:var(--text-muted);font-weight:400;margin-left:12px;letter-spacing:0.08em}
+    .drive-status{font-size:11px;padding:4px 12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase}
+    .drive-status.on{background:var(--gold-glow);color:var(--gold);border:1px solid rgba(212,168,83,0.2)}
+    .drive-status.off{background:var(--card);color:var(--text-muted);border:1px solid var(--border)}
+    .header-actions{display:flex;gap:8px;align-items:center}
 
-    .container { max-width: 960px; margin: 0 auto; padding: 24px 20px; }
+    /* BUTTONS */
+    .btn{padding:10px 24px;font-family:var(--font-body);font-size:11px;font-weight:700;cursor:pointer;transition:all 0.2s;border:none;display:inline-flex;align-items:center;gap:6px;letter-spacing:0.08em;text-transform:uppercase}
+    .btn-primary{background:var(--gold);color:var(--bg)}
+    .btn-primary:hover{background:var(--gold-hover)}
+    .btn-secondary{background:transparent;color:var(--text-secondary);border:1px solid var(--border)}
+    .btn-secondary:hover{border-color:var(--text-secondary);color:var(--text)}
+    .btn-danger{background:rgba(239,68,68,0.08);color:var(--danger);border:1px solid transparent}
+    .btn-danger:hover{border-color:var(--danger)}
+    .btn-sm{padding:6px 14px;font-size:10px}
 
-    /* ═══ LOGIN ═══ */
-    .login-screen {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
+    /* PROJECT CARDS */
+    .projects-grid{display:flex;flex-direction:column;gap:8px}
+    .project-card{background:var(--surface);border:1px solid var(--border);padding:20px 24px;cursor:pointer;transition:all 0.2s}
+    .project-card:hover{border-color:var(--border-hover)}
+    .project-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+    .project-name{font-family:var(--font-display);font-size:20px;font-weight:700}
+    .project-status{font-size:10px;padding:3px 10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase}
+    .project-status.active{background:var(--gold-glow);color:var(--gold)}
+    .project-meta{display:flex;gap:20px;font-size:11px;color:var(--text-muted);margin-bottom:12px;letter-spacing:0.02em}
+    .project-progress{display:flex;align-items:center;gap:10px}
+    .project-progress-bar{flex:1;height:2px;background:var(--border)}
+    .project-progress-fill{height:100%;background:var(--gold)}
+    .project-progress-text{font-size:12px;font-weight:700;color:var(--gold);min-width:35px;text-align:right}
 
-    .login-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-    }
+    /* DETAIL */
+    .detail-view{display:none}.detail-view.active{display:block}.list-view.hidden{display:none}
+    .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);font-size:12px;cursor:pointer;margin-bottom:24px;background:none;border:none;font-family:var(--font-body);letter-spacing:0.06em;text-transform:uppercase}
+    .detail-back:hover{color:var(--text-secondary)}
+    .detail-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px}
+    .detail-title{font-family:var(--font-display);font-size:28px;font-weight:700}
+    .detail-link{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);padding:10px 14px;font-size:12px;color:var(--text-secondary);margin-top:12px}
+    .detail-link code{color:var(--gold);font-family:monospace;font-size:12px}
+    .detail-link button{background:var(--gold-glow);color:var(--gold);border:1px solid rgba(212,168,83,0.2);padding:4px 12px;font-size:10px;cursor:pointer;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--font-body)}
 
-    .login-card .logo {
-      font-family: var(--font-display);
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
+    /* TABS */
+    .detail-tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid var(--border)}
+    .detail-tab{padding:12px 20px;font-size:11px;font-weight:700;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--font-body);letter-spacing:0.08em;text-transform:uppercase}
+    .detail-tab:hover{color:var(--text-secondary)}
+    .detail-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+    .tab-panel{display:none}.tab-panel.active{display:block}
 
-    .login-card .logo span { color: var(--accent); }
-    .login-card .subtitle { color: var(--text-secondary); font-size: 14px; margin-bottom: 32px; }
+    /* BRIEFING */
+    .briefing-section{background:var(--surface);border:1px solid var(--border);padding:20px 24px;margin-bottom:12px}
+    .briefing-section-title{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-muted);margin-bottom:16px}
+    .briefing-field{margin-bottom:12px}
+    .briefing-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;font-weight:600}
+    .briefing-value{font-size:14px;color:var(--text);line-height:1.6}
 
-    .login-card input {
-      width: 100%;
-      padding: 12px 14px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 14px;
-      outline: none;
-      margin-bottom: 16px;
-    }
+    /* FILES */
+    .files-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+    .file-card{background:var(--surface);border:1px solid var(--border);padding:16px}
+    .file-card-cat{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold-muted);margin-bottom:6px;font-weight:700}
+    .file-card-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px;font-size:13px}
+    .file-card-size{font-size:11px;color:var(--text-muted)}
 
-    .login-card input:focus { border-color: var(--accent); }
+    /* MODAL */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:100;padding:20px}
+    .modal-overlay.active{display:flex}
+    .modal{background:var(--surface);border:1px solid var(--border);padding:36px;width:100%;max-width:440px}
+    .modal-title{font-family:var(--font-display);font-size:22px;font-weight:700;margin-bottom:24px}
+    .modal .field{margin-bottom:16px}
+    .modal .field label{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;color:var(--text-secondary)}
+    .modal input{width:100%;padding:10px 12px;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:14px;outline:none}
+    .modal input:focus{border-color:var(--gold)}
+    .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:24px}
 
-    .login-error {
-      color: var(--danger);
-      font-size: 13px;
-      margin-bottom: 12px;
-      display: none;
-    }
-
-    /* ═══ HEADER ═══ */
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 24px 0 32px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 32px;
-    }
-
-    .admin-header .logo {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 700;
-    }
-
-    .admin-header .logo span { color: var(--accent); }
-    .admin-header .logo small { font-size: 12px; color: var(--text-muted); font-weight: 400; margin-left: 8px; }
-
-    .header-actions { display: flex; gap: 8px; }
-
-    /* ═══ BUTTONS ═══ */
-    .btn {
-      padding: 10px 20px;
-      border-radius: 100px;
-      font-family: var(--font-body);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .btn-secondary { background: var(--card); color: var(--text-secondary); border: 1px solid var(--border); }
-    .btn-secondary:hover { border-color: var(--border-hover); color: var(--text); }
-    .btn-danger { background: rgba(255,107,107,0.1); color: var(--danger); border: 1px solid transparent; }
-    .btn-danger:hover { border-color: var(--danger); }
-    .btn-sm { padding: 6px 14px; font-size: 12px; }
-
-    /* ═══ PROJECT CARDS ═══ */
-    .projects-grid { display: flex; flex-direction: column; gap: 12px; }
-
-    .project-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .project-card:hover { border-color: var(--border-hover); transform: translateY(-1px); }
-
-    .project-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-
-    .project-name {
-      font-family: var(--font-display);
-      font-size: 17px;
-      font-weight: 600;
-    }
-
-    .project-status {
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: 100px;
-      font-weight: 500;
-    }
-
-    .project-status.active { background: var(--success-bg); color: var(--success); }
-    .project-status.archived { background: var(--card); color: var(--text-muted); }
-
-    .project-meta {
-      display: flex;
-      gap: 20px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-    }
-
-    .project-progress {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .project-progress-bar {
-      flex: 1;
-      height: 4px;
-      background: var(--card);
-      border-radius: 100px;
-      overflow: hidden;
-    }
-
-    .project-progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), #8B7CF7);
-      border-radius: 100px;
-    }
-
-    .project-progress-text {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
-      min-width: 35px;
-      text-align: right;
-    }
-
-    /* ═══ DETAIL VIEW ═══ */
-    .detail-view { display: none; }
-    .detail-view.active { display: block; }
-    .list-view.hidden { display: none; }
-
-    .detail-back {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-secondary);
-      font-size: 13px;
-      cursor: pointer;
-      margin-bottom: 24px;
-      background: none;
-      border: none;
-      font-family: var(--font-body);
-    }
-
-    .detail-back:hover { color: var(--text); }
-
-    .detail-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 32px;
-    }
-
-    .detail-title {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    .detail-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-top: 12px;
-    }
-
-    .detail-link code {
-      color: var(--accent);
-      font-family: monospace;
-    }
-
-    .detail-link button {
-      background: var(--accent-glow);
-      color: var(--accent);
-      border: none;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 12px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* ═══ TABS ═══ */
-    .detail-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0;
-    }
-
-    .detail-tab {
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      font-family: var(--font-body);
-    }
-
-    .detail-tab:hover { color: var(--text); }
-    .detail-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    /* ═══ BRIEFING VIEW ═══ */
-    .briefing-section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-
-    .briefing-section-title {
-      font-family: var(--font-display);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-    }
-
-    .briefing-field {
-      margin-bottom: 10px;
-    }
-
-    .briefing-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 2px;
-    }
-
-    .briefing-value {
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    .briefing-value.empty { color: var(--text-muted); font-style: italic; }
-
-    /* ═══ FILES VIEW ═══ */
-    .files-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 12px;
-    }
-
-    .file-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      font-size: 13px;
-    }
-
-    .file-card-cat {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .file-card-name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      margin-bottom: 4px;
-    }
-
-    .file-card-size { font-size: 11px; color: var(--text-muted); }
-
-    /* ═══ MODAL ═══ */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      padding: 20px;
-    }
-
-    .modal-overlay.active { display: flex; }
-
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      width: 100%;
-      max-width: 440px;
-    }
-
-    .modal-title {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    .modal .field {
-      margin-bottom: 16px;
-    }
-
-    .modal .field label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 6px;
-    }
-
-    .modal input {
-      width: 100%;
-      padding: 10px 12px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 14px;
-      outline: none;
-    }
-
-    .modal input:focus { border-color: var(--accent); }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 24px;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--text-secondary);
-    }
-
-    .empty-state .icon { font-size: 36px; margin-bottom: 12px; }
-    .empty-state p { font-size: 14px; }
-
-    /* ═══ TOAST ═══ */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      padding: 14px 20px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      z-index: 200;
-      transform: translateY(100px);
-      opacity: 0;
-      transition: all 0.3s;
-    }
-    .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.success { border-color: var(--success); }
+    .empty-state{text-align:center;padding:60px 20px;color:var(--text-muted)}
+    .empty-state .icon{font-size:28px;margin-bottom:12px;color:var(--text-muted)}
+    .toast{position:fixed;bottom:24px;right:24px;padding:14px 20px;background:var(--card);border:1px solid var(--border);font-size:13px;z-index:200;transform:translateY(100px);opacity:0;transition:all 0.3s;font-weight:500}
+    .toast.show{transform:translateY(0);opacity:1}.toast.success{border-left:3px solid var(--gold)}
   </style>
 </head>
 <body>
-
-<!-- LOGIN -->
 <div id="loginScreen" class="login-screen">
   <div class="login-card">
     <div class="logo">ELE<span>V</span>O</div>
     <div class="subtitle">Admin Portal</div>
     <div class="login-error" id="loginError">Falsches Passwort</div>
     <input type="password" id="loginPassword" placeholder="Passwort" autofocus>
-    <button class="btn btn-primary" style="width:100%;" onclick="doLogin()">Anmelden</button>
+    <button class="btn btn-primary" style="width:100%" onclick="doLogin()">Anmelden</button>
   </div>
 </div>
 
-<!-- MAIN -->
-<div id="mainScreen" style="display:none;">
+<div id="mainScreen" style="display:none">
   <div class="container">
-
     <div class="admin-header">
       <div class="logo">ELE<span>V</span>O <small>Admin</small></div>
       <div class="header-actions">
-        <button class="btn btn-primary" onclick="showNewProjectModal()">+ Neues Projekt</button>
+        <span class="drive-status" id="driveStatus"></span>
+        <button class="btn btn-primary" onclick="showNewProjectModal()">+ Projekt</button>
         <button class="btn btn-secondary" onclick="logout()">Logout</button>
       </div>
     </div>
 
-    <!-- LIST VIEW -->
-    <div class="list-view" id="listView">
-      <div class="projects-grid" id="projectsGrid"></div>
-    </div>
+    <div class="list-view" id="listView"><div class="projects-grid" id="projectsGrid"></div></div>
 
-    <!-- DETAIL VIEW -->
     <div class="detail-view" id="detailView">
-      <button class="detail-back" onclick="showList()">← Alle Projekte</button>
-
+      <button class="detail-back" onclick="showList()">← Zurück</button>
       <div class="detail-header">
         <div>
           <div class="detail-title" id="detailTitle">—</div>
-          <div class="detail-link">
-            Kunden-Link: <code id="detailLink">—</code>
-            <button onclick="copyLink()">Kopieren</button>
-          </div>
+          <div class="detail-link">Link: <code id="detailLink">—</code><button onclick="copyLink()">Kopieren</button></div>
         </div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-secondary btn-sm" id="downloadAllBtn" onclick="downloadAll()">⬇ Alle Dateien</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" onclick="downloadAll()">↓ Dateien</button>
           <button class="btn btn-danger btn-sm" onclick="deleteProject()">Löschen</button>
         </div>
       </div>
-
       <div class="detail-tabs">
         <button class="detail-tab active" data-tab="briefing" onclick="switchTab('briefing')">Briefing</button>
         <button class="detail-tab" data-tab="files" onclick="switchTab('files')">Dateien</button>
-        <button class="detail-tab" data-tab="checklist" onclick="switchTab('checklist')">Checkliste</button>
+        <button class="detail-tab" data-tab="checklist" onclick="switchTab('checklist')">Status</button>
       </div>
-
       <div class="tab-panel active" id="tab-briefing"></div>
       <div class="tab-panel" id="tab-files"></div>
       <div class="tab-panel" id="tab-checklist"></div>
     </div>
-
   </div>
 </div>
 
-<!-- NEW PROJECT MODAL -->
 <div class="modal-overlay" id="newProjectModal">
   <div class="modal">
     <div class="modal-title">Neues Projekt</div>
-    <div class="field">
-      <label>Firmenname</label>
-      <input type="text" id="newProjectName" placeholder="z.B. Ristorante Da Mario">
-    </div>
-    <div class="field">
-      <label>E-Mail des Kunden (optional)</label>
-      <input type="email" id="newProjectEmail" placeholder="info@firma.de">
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button>
-      <button class="btn btn-primary" onclick="createProject()">Erstellen</button>
-    </div>
+    <div class="field"><label>Firmenname</label><input type="text" id="newProjectName" placeholder="z.B. Ristorante Da Mario"></div>
+    <div class="field"><label>E-Mail des Kunden <span style="color:var(--text-muted);font-weight:400;text-transform:none">(optional)</span></label><input type="email" id="newProjectEmail" placeholder="info@firma.de"></div>
+    <div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Abbrechen</button><button class="btn btn-primary" onclick="createProject()">Erstellen</button></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-(function() {
+(function(){
   let adminToken = localStorage.getItem('elevo_admin_token');
-  let projects = [];
-  let currentProject = null;
+  let projects=[], currentProject=null;
+  const BASE = location.origin;
 
-  const BASE = window.location.origin;
-
-  // ═══ AUTH ═══
-  window.doLogin = async function() {
-    const pw = document.getElementById('loginPassword').value;
-    try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw })
-      });
-      if (!res.ok) {
-        document.getElementById('loginError').style.display = 'block';
-        return;
-      }
-      const data = await res.json();
-      adminToken = data.token;
-      localStorage.setItem('elevo_admin_token', adminToken);
-      showMain();
-    } catch (e) {
-      document.getElementById('loginError').style.display = 'block';
-    }
+  window.doLogin = async()=>{
+    const pw=document.getElementById('loginPassword').value;
+    try{
+      const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+      if(!r.ok){document.getElementById('loginError').style.display='block';return}
+      const d=await r.json();adminToken=d.token;localStorage.setItem('elevo_admin_token',adminToken);showMain(d.driveEnabled);
+    }catch(e){document.getElementById('loginError').style.display='block'}
   };
 
-  document.getElementById('loginPassword').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
+  document.getElementById('loginPassword').onkeydown=e=>{if(e.key==='Enter')doLogin()};
+  window.logout=()=>{localStorage.removeItem('elevo_admin_token');location.reload()};
+  function h(){return{'Content-Type':'application/json','x-admin-token':adminToken}}
 
-  window.logout = function() {
-    localStorage.removeItem('elevo_admin_token');
-    location.reload();
-  };
+  if(adminToken)showMain();
 
-  function headers() { return { 'Content-Type': 'application/json', 'x-admin-token': adminToken }; }
-
-  // ═══ INIT ═══
-  if (adminToken) showMain();
-
-  async function showMain() {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('mainScreen').style.display = 'block';
+  async function showMain(driveOn){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('mainScreen').style.display='block';
+    if(driveOn===undefined){try{const r=await fetch('/api/admin/drive-status',{headers:h()});const d=await r.json();driveOn=d.enabled}catch(e){driveOn=false}}
+    const ds=document.getElementById('driveStatus');
+    ds.className=`drive-status ${driveOn?'on':'off'}`;ds.textContent=driveOn?'Drive ✓':'Drive —';
     await loadProjects();
   }
 
-  // ═══ PROJECTS LIST ═══
-  async function loadProjects() {
-    try {
-      const res = await fetch('/api/admin/projects', { headers: headers() });
-      if (res.status === 401) { logout(); return; }
-      projects = await res.json();
-      renderProjects();
-    } catch (e) { console.error(e); }
+  async function loadProjects(){
+    try{const r=await fetch('/api/admin/projects',{headers:h()});if(r.status===401){logout();return}projects=await r.json();renderProjects()}catch(e){}
   }
 
-  function renderProjects() {
-    const grid = document.getElementById('projectsGrid');
-    if (projects.length === 0) {
-      grid.innerHTML = `
-        <div class="empty-state">
-          <div class="icon">📁</div>
-          <p>Noch keine Projekte. Erstelle dein erstes.</p>
-        </div>
-      `;
-      return;
-    }
-
-    grid.innerHTML = projects.map(p => `
+  function renderProjects(){
+    const g=document.getElementById('projectsGrid');
+    if(!projects.length){g.innerHTML='<div class="empty-state"><div class="icon">◻</div><p>Noch keine Projekte.</p></div>';return}
+    g.innerHTML=projects.map(p=>`
       <div class="project-card" onclick="showDetail('${p.id}')">
-        <div class="project-card-header">
-          <div class="project-name">${p.company_name}</div>
-          <div class="project-status ${p.status}">${p.status === 'active' ? 'Aktiv' : 'Archiviert'}</div>
-        </div>
-        <div class="project-meta">
-          <span>${p.upload_count} Dateien (${formatSize(p.upload_size)})</span>
-          <span>${p.briefing_steps}/5 Briefing-Schritte</span>
-          <span>${timeAgo(p.updated_at)}</span>
-        </div>
-        <div class="project-progress">
-          <div class="project-progress-bar"><div class="project-progress-fill" style="width:${p.progress}%"></div></div>
-          <div class="project-progress-text">${p.progress}%</div>
-        </div>
-      </div>
-    `).join('');
+        <div class="project-card-header"><div class="project-name">${p.company_name}</div><div class="project-status ${p.status}">${p.status==='active'?'Aktiv':'Archiv'}</div></div>
+        <div class="project-meta"><span>${p.upload_count} Dateien (${fmtSize(p.upload_size)})</span><span>${p.briefing_steps}/5 Briefing</span><span>${timeAgo(p.updated_at)}</span></div>
+        <div class="project-progress"><div class="project-progress-bar"><div class="project-progress-fill" style="width:${p.progress}%"></div></div><div class="project-progress-text">${p.progress}%</div></div>
+      </div>`).join('');
   }
 
-  // ═══ DETAIL VIEW ═══
-  window.showDetail = async function(id) {
-    try {
-      const res = await fetch(`/api/admin/projects/${id}`, { headers: headers() });
-      currentProject = await res.json();
-      renderDetail();
-      document.getElementById('listView').classList.add('hidden');
-      document.getElementById('detailView').classList.add('active');
-    } catch (e) { console.error(e); }
+  window.showDetail=async id=>{
+    try{const r=await fetch(`/api/admin/projects/${id}`,{headers:h()});currentProject=await r.json();renderDetail();
+    document.getElementById('listView').classList.add('hidden');document.getElementById('detailView').classList.add('active')}catch(e){}
   };
 
-  window.showList = function() {
-    document.getElementById('detailView').classList.remove('active');
-    document.getElementById('listView').classList.remove('hidden');
-    loadProjects();
-  };
+  window.showList=()=>{document.getElementById('detailView').classList.remove('active');document.getElementById('listView').classList.remove('hidden');loadProjects()};
 
-  function renderDetail() {
-    const p = currentProject;
-    document.getElementById('detailTitle').textContent = p.company_name;
-    document.getElementById('detailLink').textContent = `${BASE}/p/${p.token}`;
+  function renderDetail(){
+    const p=currentProject;
+    document.getElementById('detailTitle').textContent=p.company_name;
+    document.getElementById('detailLink').querySelector('code').textContent=`${BASE}/p/${p.token}`;
 
-    // Briefing tab
-    const briefingTab = document.getElementById('tab-briefing');
-    const stepNames = { 1: 'Unternehmen', 2: 'Geschichte', 3: 'Kunden', 4: 'Angebot', 5: 'Kundenstimmen' };
-    const fieldLabels = {
-      company_name: 'Firmenname', industry: 'Branche', founded: 'Gegründet', phone: 'Telefon',
-      email: 'E-Mail', address: 'Adresse', current_website: 'Aktuelle Website', social_media: 'Social Media',
-      one_liner: 'In einem Satz', why_story: 'Warum gibt es euch?', usp: 'USP / Was macht euch anders?', slogan: 'Slogan',
-      target_group: 'Zielgruppe', search_terms: 'Suchbegriffe', customer_pain: 'Größtes Problem', reach: 'Reichweite',
-      service_1_name: 'Leistung 1', service_1_desc: 'Beschreibung 1', service_2_name: 'Leistung 2',
-      service_2_desc: 'Beschreibung 2', service_3_name: 'Leistung 3', service_3_desc: 'Beschreibung 3',
-      show_prices: 'Preise zeigen?', prices: 'Preisangaben',
-      google_stars: 'Google Sterne', google_count: 'Anzahl Bewertungen',
-      testimonial_1: 'Zitat 1', testimonial_1_name: 'Name 1',
-      testimonial_2: 'Zitat 2', testimonial_2_name: 'Name 2',
-      testimonial_3: 'Zitat 3', testimonial_3_name: 'Name 3', stats: 'Zahlen & Erfolge'
-    };
+    const stepNames={1:'Unternehmen',2:'Geschichte',3:'Kunden',4:'Angebot',5:'Kundenstimmen'};
+    const labels={company_name:'Firmenname',industry:'Branche',founded:'Gegründet',phone:'Telefon',email:'E-Mail',address:'Adresse',current_website:'Website',social_media:'Social Media',one_liner:'In einem Satz',why_story:'Warum?',usp:'USP',slogan:'Slogan',target_group:'Zielgruppe',search_terms:'Suchbegriffe',customer_pain:'Problem',reach:'Reichweite',service_1_name:'Leistung 1',service_1_desc:'Beschreibung',service_2_name:'Leistung 2',service_2_desc:'Beschreibung',service_3_name:'Leistung 3',service_3_desc:'Beschreibung',show_prices:'Preise?',prices:'Preise',google_stars:'Sterne',google_count:'Bewertungen',testimonial_1:'Zitat 1',testimonial_1_name:'Name',testimonial_2:'Zitat 2',testimonial_2_name:'Name',testimonial_3:'Zitat 3',testimonial_3_name:'Name',stats:'Zahlen'};
 
-    let briefingHtml = '';
-    const briefingData = {};
-    p.briefing.forEach(b => { briefingData[b.step] = JSON.parse(b.data); });
-
-    for (let step = 1; step <= 5; step++) {
-      const data = briefingData[step];
-      if (!data) {
-        briefingHtml += `<div class="briefing-section"><div class="briefing-section-title">${stepNames[step]}</div><p style="color:var(--text-muted);font-size:13px;">Noch nicht ausgefüllt</p></div>`;
-        continue;
-      }
-
-      briefingHtml += `<div class="briefing-section"><div class="briefing-section-title">${stepNames[step]}</div>`;
-      for (const [key, value] of Object.entries(data)) {
-        if (key.startsWith('hours_') || !value) continue;
-        const label = fieldLabels[key] || key;
-        briefingHtml += `<div class="briefing-field"><div class="briefing-label">${label}</div><div class="briefing-value">${value}</div></div>`;
-      }
-
-      // Hours
-      const hourKeys = Object.keys(data).filter(k => k.startsWith('hours_') && data[k]);
-      if (hourKeys.length) {
-        briefingHtml += `<div class="briefing-field"><div class="briefing-label">Öffnungszeiten</div><div class="briefing-value">`;
-        const days = ['mo', 'di', 'mi', 'do', 'fr', 'sa', 'so'];
-        days.forEach(d => {
-          const open = data[`hours_${d}_open`];
-          const close = data[`hours_${d}_close`];
-          if (open || close) briefingHtml += `${d.toUpperCase()}: ${open || '—'} – ${close || '—'}<br>`;
-        });
-        briefingHtml += `</div></div>`;
-      }
-
-      briefingHtml += `</div>`;
+    const bd={};p.briefing.forEach(b=>{bd[b.step]=JSON.parse(b.data)});
+    let bh='';
+    for(let s=1;s<=5;s++){
+      const d=bd[s];
+      if(!d){bh+=`<div class="briefing-section"><div class="briefing-section-title">${stepNames[s]}</div><p style="color:var(--text-muted);font-size:13px">Noch nicht ausgefüllt</p></div>`;continue}
+      bh+=`<div class="briefing-section"><div class="briefing-section-title">${stepNames[s]}</div>`;
+      for(const[k,v]of Object.entries(d)){if(k.startsWith('hours_')||!v)continue;bh+=`<div class="briefing-field"><div class="briefing-label">${labels[k]||k}</div><div class="briefing-value">${v}</div></div>`}
+      const hrs=Object.keys(d).filter(k=>k.startsWith('hours_')&&d[k]);
+      if(hrs.length){bh+='<div class="briefing-field"><div class="briefing-label">Öffnungszeiten</div><div class="briefing-value">';['mo','di','mi','do','fr','sa','so'].forEach(dy=>{const o=d[`hours_${dy}_open`],c=d[`hours_${dy}_close`];if(o||c)bh+=`${dy.toUpperCase()}: ${o||'—'} – ${c||'—'}<br>`});bh+='</div></div>'}
+      bh+='</div>';
     }
+    document.getElementById('tab-briefing').innerHTML=bh||'<div class="empty-state"><p>Kein Briefing.</p></div>';
 
-    briefingTab.innerHTML = briefingHtml || '<div class="empty-state"><p>Noch kein Briefing ausgefüllt.</p></div>';
+    const catL={logo:'Logo',team:'Team',space:'Räumlichkeiten',work:'Projekte',other:'Sonstiges'};
+    const ft=document.getElementById('tab-files');
+    ft.innerHTML=p.uploads.length?`<div class="files-grid">${p.uploads.map(f=>`<div class="file-card"><div class="file-card-cat">${catL[f.category]||f.category}${f.synced?' ✓':''}</div><div class="file-card-name">${f.original_name}</div><div class="file-card-size">${fmtSize(f.size)}</div></div>`).join('')}</div>`:'<div class="empty-state"><p>Keine Dateien.</p></div>';
 
-    // Files tab
-    const filesTab = document.getElementById('tab-files');
-    if (p.uploads.length === 0) {
-      filesTab.innerHTML = '<div class="empty-state"><p>Noch keine Dateien hochgeladen.</p></div>';
-    } else {
-      const catLabels = { logo: 'Logo', team: 'Team', space: 'Räumlichkeiten', work: 'Projekte/Produkte', other: 'Sonstige' };
-      filesTab.innerHTML = `<div class="files-grid">${p.uploads.map(f => `
-        <div class="file-card">
-          <div class="file-card-cat">${catLabels[f.category] || f.category}</div>
-          <div class="file-card-name">${f.original_name}</div>
-          <div class="file-card-size">${formatSize(f.size)}</div>
-        </div>
-      `).join('')}</div>`;
-    }
-
-    // Checklist tab
-    const checklistTab = document.getElementById('tab-checklist');
-    checklistTab.innerHTML = p.checklist.map(c => `
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;">
-        <span style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;${c.completed ? 'background:var(--success-bg);color:var(--success)' : 'background:var(--card);color:var(--text-muted);border:1px solid var(--border)'}">
-          ${c.completed ? '✓' : '○'}
-        </span>
-        <span style="color:${c.completed ? 'var(--success)' : 'var(--text-secondary)'}">${c.item}</span>
-        ${c.required ? '<span style="font-size:10px;color:var(--warning);">Pflicht</span>' : ''}
-      </div>
-    `).join('');
+    document.getElementById('tab-checklist').innerHTML=p.checklist.map(c=>`<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px"><span style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;border:1px solid ${c.completed?'var(--gold)':'var(--border)'};${c.completed?'background:var(--gold-glow);color:var(--gold)':''}">${c.completed?'✓':''}</span><span style="color:${c.completed?'var(--gold)':'var(--text-secondary)'}">${c.item}</span>${c.required?'<span style="font-size:9px;color:var(--warning);letter-spacing:0.08em;text-transform:uppercase;font-weight:700">Pflicht</span>':''}</div>`).join('');
   }
 
-  window.switchTab = function(tab) {
-    document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
-    document.querySelector(`.detail-tab[data-tab="${tab}"]`).classList.add('active');
-    document.getElementById(`tab-${tab}`).classList.add('active');
-  };
+  window.switchTab=tab=>{document.querySelectorAll('.detail-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.tab-panel').forEach(t=>t.classList.remove('active'));document.querySelector(`.detail-tab[data-tab="${tab}"]`).classList.add('active');document.getElementById(`tab-${tab}`).classList.add('active')};
+  window.copyLink=()=>{navigator.clipboard.writeText(document.getElementById('detailLink').querySelector('code').textContent);showToast('Link kopiert')};
+  window.downloadAll=()=>{if(!currentProject)return;window.open(`/api/admin/download-all/${currentProject.id}?token=${adminToken}`,'_blank')};
+  window.deleteProject=async()=>{if(!confirm(`"${currentProject.company_name}" löschen?`))return;await fetch(`/api/admin/projects/${currentProject.id}`,{method:'DELETE',headers:h()});showList();showToast('Gelöscht')};
 
-  window.copyLink = function() {
-    const link = document.getElementById('detailLink').textContent;
-    navigator.clipboard.writeText(link);
-    showToast('Link kopiert!');
-  };
+  window.showNewProjectModal=()=>{document.getElementById('newProjectModal').classList.add('active');document.getElementById('newProjectName').focus()};
+  window.closeModal=()=>document.getElementById('newProjectModal').classList.remove('active');
 
-  window.downloadAll = function() {
-    if (!currentProject) return;
-    window.open(`/api/admin/download-all/${currentProject.id}?token=${adminToken}`, '_blank');
-  };
-
-  window.deleteProject = async function() {
-    if (!confirm(`"${currentProject.company_name}" wirklich löschen? Alle Dateien werden gelöscht.`)) return;
-    await fetch(`/api/admin/projects/${currentProject.id}`, { method: 'DELETE', headers: headers() });
-    showList();
-    showToast('Projekt gelöscht');
-  };
-
-  // ═══ NEW PROJECT ═══
-  window.showNewProjectModal = function() {
-    document.getElementById('newProjectModal').classList.add('active');
-    document.getElementById('newProjectName').focus();
-  };
-
-  window.closeModal = function() {
-    document.getElementById('newProjectModal').classList.remove('active');
-  };
-
-  window.createProject = async function() {
-    const name = document.getElementById('newProjectName').value.trim();
-    if (!name) return;
-    const email = document.getElementById('newProjectEmail').value.trim();
-
-    const res = await fetch('/api/admin/projects', {
-      method: 'POST',
-      headers: headers(),
-      body: JSON.stringify({ company_name: name, client_email: email || null })
-    });
-
-    const data = await res.json();
-    closeModal();
-    document.getElementById('newProjectName').value = '';
-    document.getElementById('newProjectEmail').value = '';
+  window.createProject=async()=>{
+    const name=document.getElementById('newProjectName').value.trim();if(!name)return;
+    const email=document.getElementById('newProjectEmail').value.trim();
+    const r=await fetch('/api/admin/projects',{method:'POST',headers:h(),body:JSON.stringify({company_name:name,client_email:email||null})});
+    const d=await r.json();closeModal();document.getElementById('newProjectName').value='';document.getElementById('newProjectEmail').value='';
     await loadProjects();
-
-    const fullLink = `${BASE}${data.url}`;
-    showToast('Projekt erstellt!');
-    setTimeout(() => {
-      if (confirm(`Kunden-Link:\n${fullLink}\n\nIn die Zwischenablage kopieren?`)) {
-        navigator.clipboard.writeText(fullLink);
-      }
-    }, 300);
+    const link=`${BASE}${d.url}`;showToast('Projekt erstellt');
+    setTimeout(()=>{if(confirm(`Kunden-Link:\n${link}\n\nKopieren?`))navigator.clipboard.writeText(link)},300);
   };
 
-  // ═══ UTILS ═══
-  function formatSize(bytes) {
-    if (!bytes) return '0 B';
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-  }
-
-  function timeAgo(dateStr) {
-    const diff = Date.now() - new Date(dateStr).getTime();
-    const mins = Math.floor(diff / 60000);
-    if (mins < 1) return 'gerade eben';
-    if (mins < 60) return `vor ${mins} Min.`;
-    const hrs = Math.floor(mins / 60);
-    if (hrs < 24) return `vor ${hrs} Std.`;
-    const days = Math.floor(hrs / 24);
-    return `vor ${days} Tag${days > 1 ? 'en' : ''}`;
-  }
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast success show';
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
+  function fmtSize(b){if(!b)return'0 B';if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(0)+' KB';return(b/1048576).toFixed(1)+' MB'}
+  function timeAgo(d){const m=Math.floor((Date.now()-new Date(d).getTime())/60000);if(m<1)return'gerade';if(m<60)return`${m} Min.`;const hr=Math.floor(m/60);if(hr<24)return`${hr} Std.`;return`${Math.floor(hr/24)} Tage`}
+  function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.className='toast success show';setTimeout(()=>t.classList.remove('show'),3000)}
 })();
 </script>
-
 </body>
 </html>
