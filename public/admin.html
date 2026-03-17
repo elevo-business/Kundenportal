@@ -262,7 +262,7 @@
     if(!p.uploads||!p.uploads.length){
       ft.innerHTML='<div class="empty">Keine Dateien hochgeladen.</div>';
     }else{
-      ft.innerHTML='<div style="margin-bottom:12px;font-size:11px;color:var(--text-muted)">'+p.uploads.length+' Dateien — Klicke zum Download</div><div class="f-grid">'+p.uploads.map(f=>`<a class="f-card" href="/api/admin/download/${p.id}/${f.id}" style="text-decoration:none;color:inherit" target="_blank"><div class="f-cat">${cl[f.category]||f.category}</div><div class="f-name">${esc(f.original_name)}</div><div class="f-meta"><span class="f-size">${fmtS(f.size)}</span><span class="f-dl">↓</span></div></a>`).join('')+'</div>';
+      ft.innerHTML='<div style="margin-bottom:12px;font-size:11px;color:var(--text-muted)">'+p.uploads.length+' Dateien — Klicke zum Download</div><div class="f-grid">'+p.uploads.map(f=>`<div class="f-card" onclick="dlFile('${p.id}','${f.id}','${esc(f.original_name)}')"><div class="f-cat">${cl[f.category]||f.category}</div><div class="f-name">${esc(f.original_name)}</div><div class="f-meta"><span class="f-size">${fmtS(f.size)}</span><span class="f-dl">↓</span></div></div>`).join('')+'</div>';
     }
 
     // CHECKLIST
@@ -280,7 +280,9 @@
   // ACTIONS
   window.copyLink=function(){const t=document.getElementById('dLink').textContent;navigator.clipboard.writeText(t).then(()=>toast('Link kopiert')).catch(()=>{prompt('Link kopieren:',t)})};
 
-  window.dlAll=function(){if(!cur)return;const a=document.createElement('a');a.href='/api/admin/download-all/'+cur.id;a.download='';document.body.appendChild(a);a.click();a.remove();toast('Download gestartet')};
+  window.dlFile=async function(pid,fid,fname){toast('Download...');try{const r=await fetch('/api/admin/download/'+pid+'/'+fid,{headers:{'x-admin-token':tk}});if(!r.ok){toast('Fehler');return}const b=await r.blob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fname;a.click();URL.revokeObjectURL(a.href);toast('Heruntergeladen')}catch(e){toast('Download fehlgeschlagen')}};
+
+  window.dlAll=function(){if(!cur)return;fetch('/api/admin/download-all/'+cur.id,{headers:{'x-admin-token':tk}}).then(r=>{if(!r.ok)throw 0;return r.blob()}).then(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=cur.company_name+'_dateien.tar.gz';a.click();URL.revokeObjectURL(a.href);toast('Download gestartet')}).catch(()=>toast('Fehler'))};
 
   window.exportBriefing=function(){if(!cur)return;const bd={};if(cur.briefing)cur.briefing.forEach(b=>{try{bd['step_'+b.step]=JSON.parse(b.data)}catch(e){bd['step_'+b.step]=b.data}});const blob=new Blob([JSON.stringify(bd,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=cur.company_name.replace(/[^a-zA-Z0-9äöüÄÖÜß]/g,'_')+'_briefing.json';a.click();toast('Briefing exportiert')};
 
