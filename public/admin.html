@@ -218,7 +218,7 @@
   function renderDetail(){
     const p=currentProject;
     document.getElementById('detailTitle').textContent=p.company_name;
-    document.getElementById('detailLink').querySelector('code').textContent=`${BASE}/p/${p.token}`;
+    document.getElementById('detailLink').textContent=`${BASE}/p/${p.token}`;
 
     const stepNames={1:'Unternehmen',2:'Geschichte',3:'Kunden',4:'Angebot',5:'Kundenstimmen'};
     const labels={company_name:'Firmenname',industry:'Branche',founded:'Gegründet',phone:'Telefon',email:'E-Mail',address:'Adresse',current_website:'Website',social_media:'Social Media',one_liner:'In einem Satz',why_story:'Warum?',usp:'USP',slogan:'Slogan',target_group:'Zielgruppe',search_terms:'Suchbegriffe',customer_pain:'Problem',reach:'Reichweite',service_1_name:'Leistung 1',service_1_desc:'Beschreibung',service_2_name:'Leistung 2',service_2_desc:'Beschreibung',service_3_name:'Leistung 3',service_3_desc:'Beschreibung',show_prices:'Preise?',prices:'Preise',google_stars:'Sterne',google_count:'Bewertungen',testimonial_1:'Zitat 1',testimonial_1_name:'Name',testimonial_2:'Zitat 2',testimonial_2_name:'Name',testimonial_3:'Zitat 3',testimonial_3_name:'Name',stats:'Zahlen'};
@@ -244,7 +244,7 @@
   }
 
   window.switchTab=tab=>{document.querySelectorAll('.detail-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.tab-panel').forEach(t=>t.classList.remove('active'));document.querySelector(`.detail-tab[data-tab="${tab}"]`).classList.add('active');document.getElementById(`tab-${tab}`).classList.add('active')};
-  window.copyLink=()=>{navigator.clipboard.writeText(document.getElementById('detailLink').querySelector('code').textContent);showToast('Link kopiert')};
+  window.copyLink=()=>{navigator.clipboard.writeText(document.getElementById('detailLink').textContent);showToast('Link kopiert')};
   window.downloadAll=()=>{if(!currentProject)return;window.open(`/api/admin/download-all/${currentProject.id}?token=${adminToken}`,'_blank')};
   window.deleteProject=async()=>{if(!confirm(`"${currentProject.company_name}" löschen?`))return;await fetch(`/api/admin/projects/${currentProject.id}`,{method:'DELETE',headers:h()});showList();showToast('Gelöscht')};
 
