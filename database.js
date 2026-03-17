@@ -11,6 +11,7 @@ function getDb() {
     db.pragma('journal_mode = WAL');
     db.pragma('foreign_keys = ON');
     initTables();
+    migrate();
   }
   return db;
 }
@@ -60,6 +61,21 @@ function initTables() {
       UNIQUE(project_id, item)
     );
   `);
+}
+
+function migrate() {
+  const cols = db.prepare("PRAGMA table_info(projects)").all().map(c => c.name);
+  if (!cols.includes('gdrive_folder_id')) {
+    db.exec("ALTER TABLE projects ADD COLUMN gdrive_folder_id TEXT");
+    console.log('Migration: gdrive_folder_id added to projects');
+  }
+
+  const uploadCols = db.prepare("PRAGMA table_info(uploads)").all().map(c => c.name);
+  if (!uploadCols.includes('gdrive_file_id')) {
+    db.exec("ALTER TABLE uploads ADD COLUMN gdrive_file_id TEXT");
+    db.exec("ALTER TABLE uploads ADD COLUMN synced INTEGER DEFAULT 0");
+    console.log('Migration: gdrive columns added to uploads');
+  }
 }
 
 function generateToken() { return crypto.randomBytes(6).toString('hex'); }
