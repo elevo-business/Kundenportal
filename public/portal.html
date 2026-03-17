@@ -2,7 +2,9 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#09090B">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>ELEVO — Dein Projekt-Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
@@ -10,188 +12,198 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #09090B;
-      --surface: #111114;
-      --card: #18181B;
-      --border: #27272A;
-      --border-hover: #3F3F46;
-      --text: #FAFAFA;
-      --text-secondary: #A1A1AA;
-      --text-muted: #52525B;
-      --gold: #D4A853;
-      --gold-hover: #E8C97A;
-      --gold-glow: rgba(212, 168, 83, 0.10);
-      --gold-muted: #A68B3C;
-      --success: #22C55E;
-      --success-bg: rgba(34, 197, 94, 0.08);
-      --warning: #F59E0B;
-      --danger: #EF4444;
+      --bg: #09090B; --surface: #111114; --card: #18181B; --border: #27272A; --border-hover: #3F3F46;
+      --text: #FAFAFA; --text-secondary: #A1A1AA; --text-muted: #52525B;
+      --gold: #D4A853; --gold-hover: #E8C97A; --gold-glow: rgba(212,168,83,0.10); --gold-muted: #A68B3C;
+      --success: #22C55E; --success-bg: rgba(34,197,94,0.08);
+      --warning: #F59E0B; --danger: #EF4444;
       --font-display: 'Cormorant Garamond', Georgia, serif;
       --font-body: 'Archivo', 'Helvetica Neue', sans-serif;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
-    body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; min-height: 100dvh; line-height: 1.6; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
 
-    .container { max-width: 700px; margin: 0 auto; padding: 24px 20px 100px; }
+    .container { max-width: 700px; margin: 0 auto; padding: 20px 16px calc(100px + var(--safe-bottom)); }
 
     /* ═══ HEADER ═══ */
-    .portal-header { text-align: center; padding: 48px 0 36px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
-    .logo { font-family: var(--font-body); font-size: 18px; font-weight: 700; letter-spacing: 0.3em; color: var(--text); text-transform: uppercase; margin-bottom: 4px; }
+    .portal-header { text-align: center; padding: 36px 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .logo { font-family: var(--font-body); font-size: 16px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; }
     .logo span { color: var(--gold); }
-    .portal-subtitle { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-secondary); font-style: italic; margin-top: 6px; }
-    .company-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); padding: 10px 24px; margin-top: 20px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
-    .company-badge::before { content: ''; width: 6px; height: 6px; background: var(--success); display: block; }
+    .portal-subtitle { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-secondary); font-style: italic; margin-top: 4px; }
+    .gold-line { width: 32px; height: 1px; background: var(--gold); margin: 12px auto; }
+    .company-badge { display: inline-flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); padding: 10px 20px; margin-top: 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
+    .company-badge::before { content: ''; width: 6px; height: 6px; background: var(--success); display: block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
     /* ═══ PROGRESS ═══ */
-    .progress-section { background: var(--surface); border: 1px solid var(--border); padding: 28px; margin-bottom: 32px; position: relative; }
-    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .progress-title { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
-    .progress-percent { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--gold); }
-    .progress-bar { height: 2px; background: var(--border); margin-bottom: 24px; }
-    .progress-fill { height: 100%; background: var(--gold); transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
-    .checklist { display: flex; flex-direction: column; gap: 10px; }
-    .checklist-item { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text-secondary); font-weight: 500; }
-    .checklist-icon { width: 18px; height: 18px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; }
+    .progress-section { background: var(--surface); border: 1px solid var(--border); padding: 20px; margin-bottom: 24px; }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .progress-title { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+    .progress-percent { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--gold); }
+    .progress-bar { height: 2px; background: var(--border); margin-bottom: 20px; }
+    .progress-fill { height: 100%; background: var(--gold); transition: width 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .checklist { display: flex; flex-direction: column; gap: 8px; }
+    .checklist-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-secondary); font-weight: 500; padding: 6px 0; }
+    .checklist-icon { width: 18px; height: 18px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; transition: all 0.3s; }
     .checklist-icon.done { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); }
     .checklist-item.done { color: var(--gold); }
 
-    /* ═══ STEPS NAV ═══ */
-    .steps-nav { display: flex; gap: 2px; margin-bottom: 32px; }
-    .step-tab { flex: 1; padding: 14px 6px; background: var(--surface); border: 1px solid var(--border); cursor: pointer; text-align: center; transition: all 0.2s; font-size: 11px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
-    .step-tab:hover { border-color: var(--border-hover); color: var(--text-secondary); }
+    /* ═══ MOBILE STEP NAV ═══ */
+    .steps-nav { display: flex; gap: 2px; margin-bottom: 24px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
+    .steps-nav::-webkit-scrollbar { display: none; }
+    .step-tab { flex: 1; min-width: 52px; padding: 12px 4px; background: var(--surface); border: 1px solid var(--border); cursor: pointer; text-align: center; transition: all 0.2s; font-size: 10px; color: var(--text-muted); font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; scroll-snap-align: start; -webkit-tap-highlight-color: transparent; }
+    .step-tab:active { transform: scale(0.97); }
     .step-tab.active { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
     .step-tab.completed { border-bottom: 2px solid var(--gold-muted); }
-    .step-tab .step-num { font-family: var(--font-display); font-weight: 700; font-size: 18px; display: block; margin-bottom: 2px; color: inherit; }
+    .step-tab .step-num { font-family: var(--font-display); font-weight: 700; font-size: 18px; display: block; margin-bottom: 1px; }
 
     /* ═══ PANELS ═══ */
     .step-panel { display: none; }
-    .step-panel.active { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-    .panel-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-    .panel-title { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--text); line-height: 1.2; }
-    .panel-desc { color: var(--text-secondary); font-size: 14px; margin-top: 8px; line-height: 1.7; }
+    .step-panel.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .panel-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .panel-title { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1.2; }
+    .panel-desc { color: var(--text-secondary); font-size: 13px; margin-top: 6px; line-height: 1.7; }
 
     /* ═══ FORM ═══ */
-    .field { margin-bottom: 22px; }
-    .field label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; color: var(--text-secondary); }
-    .field .hint { font-size: 12px; color: var(--text-muted); margin-top: 6px; font-style: italic; }
-    .field label .optional { color: var(--text-muted); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; }
+    .field { margin-bottom: 20px; }
+    .field label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; color: var(--text-secondary); }
+    .field .hint { font-size: 11px; color: var(--text-muted); margin-top: 5px; font-style: italic; line-height: 1.5; }
+    .field label .optional { color: var(--text-muted); font-weight: 400; text-transform: none; letter-spacing: 0; }
 
     input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], textarea, select {
-      width: 100%; padding: 12px 14px; background: var(--card); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 14px; transition: border-color 0.2s; outline: none;
+      width: 100%; padding: 14px; background: var(--card); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 16px; transition: border-color 0.2s; outline: none; -webkit-appearance: none; border-radius: 0;
     }
     input:focus, textarea:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold-glow); }
     input::placeholder, textarea::placeholder { color: var(--text-muted); }
-    textarea { min-height: 100px; resize: vertical; line-height: 1.7; }
+    textarea { min-height: 110px; resize: vertical; line-height: 1.7; }
     select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
 
-    .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 6px; }
-    .radio-option, .checkbox-option { padding: 10px 18px; background: var(--card); border: 1px solid var(--border); cursor: pointer; font-size: 13px; transition: all 0.2s; user-select: none; font-weight: 500; }
-    .radio-option:hover, .checkbox-option:hover { border-color: var(--border-hover); }
-    .radio-option.selected, .checkbox-option.selected { border-color: var(--gold); background: var(--gold-glow); color: var(--gold); }
-    .radio-option input, .checkbox-option input { display: none; }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 500px) { .field-row { grid-template-columns: 1fr; } }
+    .radio-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .radio-option { padding: 12px 16px; background: var(--card); border: 1px solid var(--border); cursor: pointer; font-size: 13px; transition: all 0.2s; user-select: none; font-weight: 500; -webkit-tap-highlight-color: transparent; flex: 1; min-width: 100px; text-align: center; }
+    .radio-option:active { transform: scale(0.97); }
+    .radio-option.selected { border-color: var(--gold); background: var(--gold-glow); color: var(--gold); }
+    .radio-option input { display: none; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-    .hours-grid { display: grid; grid-template-columns: auto 1fr 8px 1fr; gap: 8px; align-items: center; }
-    .hours-grid .day-label { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); min-width: 28px; }
-    .hours-grid .sep { text-align: center; color: var(--text-muted); }
-    .hours-grid input { padding: 8px 10px; font-size: 13px; }
+    .hours-grid { display: grid; grid-template-columns: 36px 1fr 12px 1fr; gap: 6px; align-items: center; }
+    .hours-grid .day-label { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-secondary); }
+    .hours-grid .sep { text-align: center; color: var(--text-muted); font-size: 12px; }
+    .hours-grid input { padding: 10px 8px; font-size: 14px; }
 
     /* ═══ UPLOAD ═══ */
-    .upload-categories { display: flex; flex-direction: column; gap: 12px; }
-    .upload-cat { background: var(--surface); border: 1px solid var(--border); }
-    .upload-cat-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; }
-    .upload-cat-title { font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 10px; letter-spacing: 0.02em; }
-    .upload-cat-title .badge { font-size: 10px; font-weight: 700; padding: 3px 10px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .upload-cat-title .badge.required { background: rgba(245, 158, 11, 0.1); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.2); }
-    .upload-cat-title .badge.optional { background: var(--card); color: var(--text-muted); border: 1px solid var(--border); }
-    .upload-cat-count { font-size: 12px; color: var(--text-muted); }
-    .upload-cat-body { padding: 0 20px 20px; }
+    .upload-categories { display: flex; flex-direction: column; gap: 10px; }
+    .upload-cat { background: var(--surface); border: 1px solid var(--border); overflow: hidden; }
+    .upload-cat-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; -webkit-tap-highlight-color: transparent; }
+    .upload-cat-title { font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+    .badge { font-size: 9px; font-weight: 700; padding: 3px 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .badge.required { background: rgba(245,158,11,0.1); color: var(--warning); border: 1px solid rgba(245,158,11,0.2); }
+    .badge.optional { background: var(--card); color: var(--text-muted); border: 1px solid var(--border); }
+    .upload-cat-count { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+    .upload-cat-body { padding: 0 16px 16px; }
 
-    .dropzone { border: 1px dashed var(--border); padding: 36px 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
-    .dropzone:hover, .dropzone.dragover { border-color: var(--gold); background: var(--gold-glow); }
-    .dropzone-icon { font-size: 24px; margin-bottom: 8px; color: var(--text-muted); }
+    .dropzone { border: 1px dashed var(--border); padding: 32px 12px; text-align: center; cursor: pointer; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+    .dropzone:active { transform: scale(0.98); }
+    .dropzone.dragover { border-color: var(--gold); background: var(--gold-glow); }
+    .dropzone-icon { font-size: 20px; margin-bottom: 6px; color: var(--gold-muted); }
     .dropzone-text { font-size: 13px; color: var(--text-secondary); }
     .dropzone-text strong { color: var(--gold); }
-    .dropzone-hint { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+    .dropzone-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
-    .file-list { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; }
-    .file-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--card); font-size: 13px; }
-    .file-item-info { display: flex; align-items: center; gap: 10px; min-width: 0; }
-    .file-item-icon { width: 28px; height: 28px; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+    .file-list { margin-top: 10px; display: flex; flex-direction: column; gap: 3px; }
+    .file-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: var(--card); font-size: 12px; transition: all 0.2s; }
+    .file-item-info { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; }
+    .file-item-icon { width: 28px; height: 28px; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
     .file-item-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .file-item-size { color: var(--text-muted); font-size: 11px; flex-shrink: 0; }
-    .file-item-delete { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px 8px; font-size: 14px; transition: color 0.2s; }
-    .file-item-delete:hover { color: var(--danger); }
+    .file-item-size { color: var(--text-muted); font-size: 10px; flex-shrink: 0; margin-left: 6px; }
+    .file-item-delete { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 8px 12px; font-size: 16px; transition: color 0.2s; -webkit-tap-highlight-color: transparent; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
+    .file-item-delete:active { color: var(--danger); }
 
-    /* ═══ NAVIGATION ═══ */
-    .step-actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
-    .btn { padding: 12px 32px; font-family: var(--font-body); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; border: none; display: inline-flex; align-items: center; gap: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .btn-primary { background: var(--gold); color: var(--bg); }
+    /* ═══ FIXED BOTTOM NAV ═══ */
+    .step-actions { position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; gap: 8px; padding: 12px 16px calc(12px + var(--safe-bottom)); background: var(--bg); border-top: 1px solid var(--border); z-index: 50; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(9,9,11,0.92); }
+    .btn { padding: 14px 28px; font-family: var(--font-body); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.15s; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; letter-spacing: 0.06em; text-transform: uppercase; -webkit-tap-highlight-color: transparent; min-height: 48px; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--gold); color: var(--bg); flex: 1; }
     .btn-primary:hover { background: var(--gold-hover); }
     .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
     .btn-secondary:hover { border-color: var(--text-secondary); color: var(--text); }
-    .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
     /* ═══ SUCCESS ═══ */
-    .success-screen { display: none; text-align: center; padding: 80px 20px; }
-    .success-screen.active { display: block; }
-    .success-icon { width: 56px; height: 56px; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; font-size: 24px; color: var(--gold); }
-    .success-title { font-family: var(--font-display); font-size: 32px; font-weight: 700; margin-bottom: 12px; }
-    .success-text { color: var(--text-secondary); font-size: 15px; max-width: 420px; margin: 0 auto; line-height: 1.8; }
+    .success-screen { display: none; text-align: center; padding: 60px 20px; }
+    .success-screen.active { display: block; animation: fadeIn 0.4s ease; }
+    .success-icon { width: 52px; height: 52px; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 22px; color: var(--gold); }
+    .success-title { font-family: var(--font-display); font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+    .success-text { color: var(--text-secondary); font-size: 14px; max-width: 380px; margin: 0 auto; line-height: 1.8; }
 
     /* ═══ TOAST ═══ */
-    .toast { position: fixed; bottom: 24px; right: 24px; padding: 14px 20px; background: var(--card); border: 1px solid var(--border); font-size: 13px; color: var(--text); z-index: 1000; transform: translateY(100px); opacity: 0; transition: all 0.3s; font-weight: 500; }
+    .toast { position: fixed; bottom: calc(80px + var(--safe-bottom)); left: 16px; right: 16px; padding: 14px 16px; background: var(--card); border: 1px solid var(--border); font-size: 13px; color: var(--text); z-index: 100; transform: translateY(40px); opacity: 0; transition: all 0.3s; font-weight: 500; text-align: center; }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast.success { border-left: 3px solid var(--gold); }
     .toast.error { border-left: 3px solid var(--danger); }
 
-    /* ═══ LOADING ═══ */
+    /* ═══ LOADING / ERROR ═══ */
     .loading-screen { display: flex; justify-content: center; align-items: center; min-height: 60vh; flex-direction: column; gap: 16px; }
-    .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--gold); animation: spin 0.8s linear infinite; }
+    .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--gold); animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .error-screen { display: none; text-align: center; padding: 80px 20px; }
-    .error-screen .error-code { font-family: var(--font-display); font-size: 56px; font-weight: 700; color: var(--text-muted); }
+    .error-screen .error-code { font-family: var(--font-display); font-size: 48px; font-weight: 700; color: var(--text-muted); }
 
-    .portal-footer { text-align: center; padding: 40px 0 24px; font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .portal-footer { text-align: center; padding: 32px 0; font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
     .portal-footer a { color: var(--gold-muted); text-decoration: none; }
 
-    /* ═══ ONBOARDING TOUR ═══ */
-    .tour-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 900; display: none; }
+    .upload-progress { margin-top: 6px; height: 2px; background: var(--card); display: none; }
+    .upload-progress.active { display: block; }
+    .upload-progress-fill { height: 100%; background: var(--gold); transition: width 0.3s; }
+
+    /* ═══ ONBOARDING ═══ */
+    .tour-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 900; display: none; -webkit-tap-highlight-color: transparent; }
     .tour-overlay.active { display: block; }
-    .tour-spotlight { position: absolute; box-shadow: 0 0 0 4000px rgba(0,0,0,0.75); z-index: 901; border: 1px solid var(--gold); pointer-events: none; transition: all 0.4s ease; }
-    .tour-tooltip { position: absolute; z-index: 902; background: var(--surface); border: 1px solid var(--gold); padding: 24px; max-width: 340px; transition: all 0.3s ease; }
-    .tour-tooltip::before { content: ''; position: absolute; top: -6px; left: 24px; width: 10px; height: 10px; background: var(--surface); border-left: 1px solid var(--gold); border-top: 1px solid var(--gold); transform: rotate(45deg); }
-    .tour-step-indicator { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-    .tour-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-    .tour-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+    .tour-tooltip { position: fixed; z-index: 902; background: var(--surface); border: 1px solid var(--gold); padding: 20px; max-width: 320px; width: calc(100% - 32px); left: 16px; right: 16px; bottom: calc(20px + var(--safe-bottom)); transition: all 0.3s ease; }
+    .tour-step-indicator { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .tour-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .tour-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; }
     .tour-actions { display: flex; justify-content: space-between; align-items: center; }
-    .tour-skip { background: none; border: none; color: var(--text-muted); font-size: 12px; cursor: pointer; font-family: var(--font-body); }
-    .tour-skip:hover { color: var(--text-secondary); }
-    .tour-next { padding: 8px 20px; background: var(--gold); color: var(--bg); border: none; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); }
-    .tour-next:hover { background: var(--gold-hover); }
+    .tour-skip { background: none; border: none; color: var(--text-muted); font-size: 12px; cursor: pointer; font-family: var(--font-body); padding: 8px 0; min-height: 44px; }
+    .tour-next { padding: 10px 20px; background: var(--gold); color: var(--bg); border: none; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); min-height: 44px; }
     .tour-dots { display: flex; gap: 6px; }
     .tour-dot { width: 6px; height: 6px; background: var(--border); }
     .tour-dot.active { background: var(--gold); }
 
-    /* ═══ UPLOAD PROGRESS ═══ */
-    .upload-progress { margin-top: 8px; height: 2px; background: var(--card); display: none; }
-    .upload-progress.active { display: block; }
-    .upload-progress-fill { height: 100%; background: var(--gold); transition: width 0.3s; }
+    /* ═══ MOBILE ═══ */
+    @media (max-width: 600px) {
+      .container { padding: 16px 12px calc(90px + var(--safe-bottom)); }
+      .portal-header { padding: 28px 0 20px; }
+      .panel-title { font-size: 22px; }
+      .panel-desc { font-size: 12px; }
+      .field-row { grid-template-columns: 1fr; gap: 0; }
+      .radio-group { gap: 4px; }
+      .radio-option { padding: 12px 10px; font-size: 12px; }
+      .step-tab { padding: 10px 2px; font-size: 9px; }
+      .step-tab .step-num { font-size: 16px; }
+      .progress-section { padding: 16px; }
+      .hours-grid { grid-template-columns: 30px 1fr 8px 1fr; gap: 4px; }
+      .hours-grid input { padding: 8px 6px; font-size: 13px; }
+      .dropzone { padding: 28px 8px; }
+      .company-badge { font-size: 11px; padding: 8px 16px; }
+    }
 
-    /* ═══ GOLD ACCENT LINE ═══ */
-    .gold-line { width: 40px; height: 1px; background: var(--gold); margin: 16px auto; }
+    @media (max-width: 380px) {
+      .step-tab { min-width: 44px; font-size: 8px; }
+      .step-tab .step-num { font-size: 14px; }
+      .panel-title { font-size: 20px; }
+      input[type="text"], input[type="email"], input[type="tel"], input[type="url"], textarea, select { font-size: 15px; padding: 12px; }
+    }
   </style>
 </head>
 <body>
 
 <div class="container" id="app">
-  <div class="loading-screen" id="loadingScreen"><div class="spinner"></div><span style="color:var(--text-muted);font-size:12px;letter-spacing:0.1em;text-transform:uppercase">Wird geladen</span></div>
-  <div class="error-screen" id="errorScreen"><div class="error-code">404</div><div class="panel-title" style="margin-top:12px;">Projekt nicht gefunden</div><p style="color:var(--text-secondary);margin-top:8px;">Dieser Link ist ungültig oder abgelaufen.</p></div>
+  <div class="loading-screen" id="loadingScreen"><div class="spinner"></div><span style="color:var(--text-muted);font-size:11px;letter-spacing:0.1em;text-transform:uppercase">Wird geladen</span></div>
+  <div class="error-screen" id="errorScreen"><div class="error-code">404</div><p style="color:var(--text-secondary);margin-top:8px;font-size:14px">Projekt nicht gefunden</p></div>
 
-  <div id="mainContent" style="display:none;">
+  <div id="mainContent" style="display:none">
     <div class="portal-header">
       <div class="logo">ELE<span>V</span>O</div>
       <div class="portal-subtitle">Dein Projekt-Portal</div>
@@ -212,7 +224,7 @@
 
     <!-- STEP 1 -->
     <div class="step-panel" data-step="1">
-      <div class="panel-header"><div class="panel-title">Dein Unternehmen</div><div class="panel-desc">Die Basics — Name, Kontakt, Standort. Wir brauchen das für die Website und fürs Impressum.</div></div>
+      <div class="panel-header"><div class="panel-title">Dein Unternehmen</div><div class="panel-desc">Name, Kontakt, Standort — die Basics für deine Website.</div></div>
       <div class="field"><label>Firmenname</label><input type="text" name="company_name" placeholder="z.B. Ristorante Da Mario"></div>
       <div class="field"><label>Branche</label><select name="industry"><option value="">Bitte wählen…</option><option value="gastro">Gastronomie</option><option value="handwerk">Handwerk</option><option value="gesundheit">Gesundheit / Coaching</option><option value="it">IT / Tech</option><option value="dienstleister">Dienstleistung / Beratung</option><option value="einzelhandel">Einzelhandel</option><option value="sonstige">Sonstige</option></select></div>
       <div class="field"><label>Seit wann gibt es euch? <span class="optional">(optional)</span></label><input type="text" name="founded" placeholder="z.B. 2008"></div>
@@ -220,7 +232,7 @@
         <div class="field"><label>Telefon</label><input type="tel" name="phone" placeholder="0241 1234567"></div>
         <div class="field"><label>E-Mail</label><input type="email" name="email" placeholder="info@firma.de"></div>
       </div>
-      <div class="field"><label>Adresse <span class="optional">(optional bei Online-Business)</span></label><input type="text" name="address" placeholder="Musterstraße 1, 52062 Aachen"></div>
+      <div class="field"><label>Adresse <span class="optional">(optional)</span></label><input type="text" name="address" placeholder="Musterstraße 1, 52062 Aachen"></div>
       <div class="field"><label>Öffnungszeiten <span class="optional">(optional)</span></label><div class="hours-grid" id="hoursGrid"></div></div>
       <div class="field"><label>Aktuelle Website <span class="optional">(falls vorhanden)</span></label><input type="url" name="current_website" placeholder="https://www.beispiel.de"></div>
       <div class="field"><label>Social Media <span class="optional">(optional)</span></label><input type="text" name="social_media" placeholder="z.B. Instagram: @firmenname"></div>
@@ -228,67 +240,66 @@
 
     <!-- STEP 2 -->
     <div class="step-panel" data-step="2">
-      <div class="panel-header"><div class="panel-title">Eure Geschichte</div><div class="panel-desc">Was macht euch besonders? Hier geht's um das Warum — damit überzeugen wir eure Kunden.</div></div>
-      <div class="field"><label>Was macht ihr in einem Satz?</label><input type="text" name="one_liner" placeholder="z.B. Wir kochen authentische italienische Küche mit frischer Pasta."><div class="hint">Stell dir vor, jemand fragt dich im Aufzug.</div></div>
-      <div class="field"><label>Warum gibt es euer Unternehmen?</label><textarea name="why_story" placeholder="Was war der Auslöser? Erzähl einfach drauflos — wir machen daraus eine Story."></textarea></div>
-      <div class="field"><label>Was macht euch anders als die Konkurrenz?</label><textarea name="usp" placeholder="z.B. Jede Pasta wird morgens frisch von Hand gemacht."></textarea></div>
-      <div class="field"><label>Slogan oder Claim <span class="optional">(falls vorhanden)</span></label><input type="text" name="slogan" placeholder="z.B. „Federleicht — Zurück zu dir.""></div>
+      <div class="panel-header"><div class="panel-title">Eure Geschichte</div><div class="panel-desc">Das Warum — damit überzeugen wir eure Kunden.</div></div>
+      <div class="field"><label>Was macht ihr in einem Satz?</label><input type="text" name="one_liner" placeholder="z.B. Authentische italienische Küche mit frischer Pasta."><div class="hint">Stell dir vor, jemand fragt dich im Aufzug.</div></div>
+      <div class="field"><label>Warum gibt es euer Unternehmen?</label><textarea name="why_story" placeholder="Was war der Auslöser? Erzähl drauflos — wir machen eine Story draus."></textarea></div>
+      <div class="field"><label>Was macht euch anders?</label><textarea name="usp" placeholder="z.B. Jede Pasta wird morgens frisch von Hand gemacht."></textarea></div>
+      <div class="field"><label>Slogan <span class="optional">(falls vorhanden)</span></label><input type="text" name="slogan" placeholder="z.B. „Federleicht — Zurück zu dir.""></div>
     </div>
 
     <!-- STEP 3 -->
     <div class="step-panel" data-step="3">
-      <div class="panel-header"><div class="panel-title">Eure Kunden</div><div class="panel-desc">Je besser wir eure Kunden verstehen, desto besser wird die Website.</div></div>
-      <div class="field"><label>Wer sind eure typischen Kunden?</label><textarea name="target_group" placeholder="z.B. Familien mit Kindern, Paare, Studenten. Oder: Frauen 30-50 mit Burnout."></textarea></div>
-      <div class="field"><label>Was googeln eure Kunden?</label><textarea name="search_terms" placeholder="z.B. „italienisches Restaurant Aachen", „Elektriker Notdienst Aachen""></textarea><div class="hint">2–3 Begriffe reichen. Müssen nicht perfekt sein.</div></div>
-      <div class="field"><label>Was ist das größte Problem eurer Kunden?</label><textarea name="customer_pain" placeholder="z.B. „Finden keinen guten Handwerker dem sie vertrauen.""></textarea></div>
-      <div class="field"><label>Lokal oder überregional?</label><div class="radio-group"><label class="radio-option" data-value="lokal"><input type="radio" name="reach" value="lokal"> Lokal</label><label class="radio-option" data-value="regional"><input type="radio" name="reach" value="regional"> Regional</label><label class="radio-option" data-value="national"><input type="radio" name="reach" value="national"> National / Online</label></div></div>
+      <div class="panel-header"><div class="panel-title">Eure Kunden</div><div class="panel-desc">Je besser wir sie verstehen, desto besser die Website.</div></div>
+      <div class="field"><label>Wer sind eure typischen Kunden?</label><textarea name="target_group" placeholder="z.B. Familien, Paare, Studenten. Oder: Frauen 30-50 mit Burnout."></textarea></div>
+      <div class="field"><label>Was googeln eure Kunden?</label><textarea name="search_terms" placeholder="z.B. „italienisches Restaurant Aachen""></textarea><div class="hint">2–3 Begriffe reichen.</div></div>
+      <div class="field"><label>Größtes Problem eurer Kunden?</label><textarea name="customer_pain" placeholder="z.B. „Finden keinen Handwerker dem sie vertrauen.""></textarea></div>
+      <div class="field"><label>Lokal oder überregional?</label><div class="radio-group"><label class="radio-option" data-value="lokal"><input type="radio" name="reach" value="lokal"> Lokal</label><label class="radio-option" data-value="regional"><input type="radio" name="reach" value="regional"> Regional</label><label class="radio-option" data-value="national"><input type="radio" name="reach" value="national"> Online</label></div></div>
     </div>
 
     <!-- STEP 4 -->
     <div class="step-panel" data-step="4">
-      <div class="panel-header"><div class="panel-title">Euer Angebot</div><div class="panel-desc">Die 3 wichtigsten Leistungen — mehr brauchen wir erstmal nicht.</div></div>
-      <div class="field"><label>Leistung 1</label><input type="text" name="service_1_name" placeholder="Name (z.B. Holzofen-Pizza)" style="margin-bottom:8px"><input type="text" name="service_1_desc" placeholder="Kurze Beschreibung (1 Satz)"></div>
-      <div class="field"><label>Leistung 2</label><input type="text" name="service_2_name" placeholder="Name" style="margin-bottom:8px"><input type="text" name="service_2_desc" placeholder="Kurze Beschreibung"></div>
-      <div class="field"><label>Leistung 3 <span class="optional">(optional)</span></label><input type="text" name="service_3_name" placeholder="Name" style="margin-bottom:8px"><input type="text" name="service_3_desc" placeholder="Kurze Beschreibung"></div>
-      <div class="field"><label>Preise zeigen?</label><div class="radio-group"><label class="radio-option" data-value="yes"><input type="radio" name="show_prices" value="yes"> Ja, konkret</label><label class="radio-option" data-value="ab"><input type="radio" name="show_prices" value="ab"> „Ab"-Preise</label><label class="radio-option" data-value="no"><input type="radio" name="show_prices" value="no"> Auf Anfrage</label></div></div>
+      <div class="panel-header"><div class="panel-title">Euer Angebot</div><div class="panel-desc">Die 3 wichtigsten Leistungen.</div></div>
+      <div class="field"><label>Leistung 1</label><input type="text" name="service_1_name" placeholder="Name" style="margin-bottom:6px"><input type="text" name="service_1_desc" placeholder="Kurze Beschreibung (1 Satz)"></div>
+      <div class="field"><label>Leistung 2</label><input type="text" name="service_2_name" placeholder="Name" style="margin-bottom:6px"><input type="text" name="service_2_desc" placeholder="Kurze Beschreibung"></div>
+      <div class="field"><label>Leistung 3 <span class="optional">(optional)</span></label><input type="text" name="service_3_name" placeholder="Name" style="margin-bottom:6px"><input type="text" name="service_3_desc" placeholder="Kurze Beschreibung"></div>
+      <div class="field"><label>Preise zeigen?</label><div class="radio-group"><label class="radio-option" data-value="yes"><input type="radio" name="show_prices" value="yes"> Ja</label><label class="radio-option" data-value="ab"><input type="radio" name="show_prices" value="ab"> Ab-Preise</label><label class="radio-option" data-value="no"><input type="radio" name="show_prices" value="no"> Auf Anfrage</label></div></div>
       <div class="field" id="pricesField" style="display:none"><label>Preisangaben</label><textarea name="prices" placeholder="z.B. Pizza: 9-14€ / Pasta: 12-18€"></textarea></div>
     </div>
 
     <!-- STEP 5 -->
     <div class="step-panel" data-step="5">
-      <div class="panel-header"><div class="panel-title">Kundenstimmen</div><div class="panel-desc">Echte Bewertungen sind Gold wert. Falls du noch keine hast — kein Problem.</div></div>
+      <div class="panel-header"><div class="panel-title">Kundenstimmen</div><div class="panel-desc">Echte Bewertungen überzeugen mehr als jeder Text.</div></div>
       <div class="field-row">
-        <div class="field"><label>Google-Bewertung</label><select name="google_stars"><option value="">—</option><option value="5.0">5.0 ★★★★★</option><option value="4.9">4.9 ★★★★★</option><option value="4.8">4.8 ★★★★★</option><option value="4.7">4.7 ★★★★☆</option><option value="4.5">4.5 ★★★★☆</option><option value="none">Noch keine</option></select></div>
-        <div class="field"><label>Anzahl Bewertungen</label><input type="number" name="google_count" placeholder="z.B. 85"></div>
+        <div class="field"><label>Google-Sterne</label><select name="google_stars"><option value="">—</option><option value="5.0">5.0 ★★★★★</option><option value="4.9">4.9</option><option value="4.8">4.8</option><option value="4.7">4.7</option><option value="4.5">4.5</option><option value="none">Keine</option></select></div>
+        <div class="field"><label>Anzahl</label><input type="number" name="google_count" placeholder="z.B. 85"></div>
       </div>
-      <div class="field"><label>Kundenzitat 1 <span class="optional">(optional)</span></label><textarea name="testimonial_1" placeholder="Das Zitat…" style="min-height:60px;margin-bottom:8px"></textarea><input type="text" name="testimonial_1_name" placeholder="Name, z.B. Familie Müller"></div>
-      <div class="field"><label>Kundenzitat 2 <span class="optional">(optional)</span></label><textarea name="testimonial_2" placeholder="Weiteres Zitat…" style="min-height:60px;margin-bottom:8px"></textarea><input type="text" name="testimonial_2_name" placeholder="Name"></div>
-      <div class="field"><label>Kundenzitat 3 <span class="optional">(optional)</span></label><textarea name="testimonial_3" placeholder="Weiteres Zitat…" style="min-height:60px;margin-bottom:8px"></textarea><input type="text" name="testimonial_3_name" placeholder="Name"></div>
-      <div class="field"><label>Zahlen & Erfolge <span class="optional">(optional)</span></label><textarea name="stats" placeholder="z.B. Seit 2008, über 500 Kunden, 4.8★ bei Google" style="min-height:60px"></textarea></div>
+      <div class="field"><label>Kundenzitat 1 <span class="optional">(optional)</span></label><textarea name="testimonial_1" placeholder="Das Zitat…" style="min-height:60px;margin-bottom:6px"></textarea><input type="text" name="testimonial_1_name" placeholder="Name"></div>
+      <div class="field"><label>Kundenzitat 2 <span class="optional">(optional)</span></label><textarea name="testimonial_2" placeholder="Weiteres Zitat…" style="min-height:60px;margin-bottom:6px"></textarea><input type="text" name="testimonial_2_name" placeholder="Name"></div>
+      <div class="field"><label>Zahlen & Erfolge <span class="optional">(optional)</span></label><textarea name="stats" placeholder="z.B. Seit 2008, 500+ Kunden, 4.8★" style="min-height:60px"></textarea></div>
     </div>
 
     <!-- STEP 6 -->
     <div class="step-panel" data-step="6">
-      <div class="panel-header"><div class="panel-title">Dateien hochladen</div><div class="panel-desc">Logo, Fotos, alles was wir brauchen. Du kannst jederzeit zurückkommen und ergänzen.</div></div>
+      <div class="panel-header"><div class="panel-title">Dateien hochladen</div><div class="panel-desc">Logo, Fotos — alles was wir brauchen. Kannst du jederzeit ergänzen.</div></div>
       <div class="upload-categories" id="uploadCategories">
-        <div class="upload-cat" data-category="logo"><div class="upload-cat-header"><div class="upload-cat-title">Logo <span class="badge required">Wichtig</span></div><div class="upload-cat-count" data-count="logo">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="logo"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">PNG, SVG, JPG — am besten mit transparentem Hintergrund</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="logo"></div></div></div>
-        <div class="upload-cat" data-category="team"><div class="upload-cat-header"><div class="upload-cat-title">Team- & Portraitfotos <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="team">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="team"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">Fotos von euch — am liebsten bei der Arbeit</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="team"></div></div></div>
-        <div class="upload-cat" data-category="space"><div class="upload-cat-header"><div class="upload-cat-title">Räumlichkeiten <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="space">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="space"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">Innenraum, Außenansicht, Praxis, Werkstatt</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="space"></div></div></div>
-        <div class="upload-cat" data-category="work"><div class="upload-cat-header"><div class="upload-cat-title">Produkte & Projekte <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="work">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="work"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">Gerichte, fertige Projekte, Vorher/Nachher</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="work"></div></div></div>
-        <div class="upload-cat" data-category="other"><div class="upload-cat-header"><div class="upload-cat-title">Sonstiges <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="other">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="other"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Klicken</strong> oder hierher ziehen</div><div class="dropzone-hint">Speisekarten, PDFs, Videos, alles andere</div></div><div class="upload-progress"><div class="upload-progress-fill" style="width:0%"></div></div><div class="file-list" data-category="other"></div></div></div>
+        <div class="upload-cat" data-category="logo"><div class="upload-cat-header"><div class="upload-cat-title">Logo <span class="badge required">Wichtig</span></div><div class="upload-cat-count" data-count="logo">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="logo"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Tippen</strong> zum Auswählen</div><div class="dropzone-hint">PNG, SVG, JPG</div></div><div class="upload-progress"><div class="upload-progress-fill"></div></div><div class="file-list" data-category="logo"></div></div></div>
+        <div class="upload-cat" data-category="team"><div class="upload-cat-header"><div class="upload-cat-title">Teamfotos <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="team">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="team"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Tippen</strong> zum Auswählen</div><div class="dropzone-hint">Portraits, Team bei der Arbeit</div></div><div class="upload-progress"><div class="upload-progress-fill"></div></div><div class="file-list" data-category="team"></div></div></div>
+        <div class="upload-cat" data-category="space"><div class="upload-cat-header"><div class="upload-cat-title">Räumlichkeiten <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="space">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="space"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Tippen</strong> zum Auswählen</div><div class="dropzone-hint">Innenraum, Außenansicht</div></div><div class="upload-progress"><div class="upload-progress-fill"></div></div><div class="file-list" data-category="space"></div></div></div>
+        <div class="upload-cat" data-category="work"><div class="upload-cat-header"><div class="upload-cat-title">Produkte & Projekte <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="work">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="work"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Tippen</strong> zum Auswählen</div><div class="dropzone-hint">Fertige Arbeiten, Gerichte, Vorher/Nachher</div></div><div class="upload-progress"><div class="upload-progress-fill"></div></div><div class="file-list" data-category="work"></div></div></div>
+        <div class="upload-cat" data-category="other"><div class="upload-cat-header"><div class="upload-cat-title">Sonstiges <span class="badge optional">Optional</span></div><div class="upload-cat-count" data-count="other">—</div></div><div class="upload-cat-body"><div class="dropzone" data-category="other"><div class="dropzone-icon">↑</div><div class="dropzone-text"><strong>Tippen</strong> zum Auswählen</div><div class="dropzone-hint">PDFs, Videos, alles andere</div></div><div class="upload-progress"><div class="upload-progress-fill"></div></div><div class="file-list" data-category="other"></div></div></div>
       </div>
     </div>
 
-    <div class="success-screen" id="successScreen"><div class="success-icon">✓</div><div class="success-title">Perfekt.</div><div class="gold-line"></div><p class="success-text">Wir haben alles was wir brauchen. Du kannst diesen Link jederzeit öffnen und Dateien ergänzen oder Angaben ändern.<br><br>Wir melden uns in Kürze.</p></div>
+    <div class="success-screen" id="successScreen"><div class="success-icon">✓</div><div class="success-title">Perfekt.</div><div class="gold-line"></div><p class="success-text">Wir haben alles. Du kannst jederzeit zurückkommen und ergänzen.<br><br>Wir melden uns in Kürze.</p></div>
 
-    <div class="step-actions" id="stepActions"><button class="btn btn-secondary" id="btnPrev" disabled>← Zurück</button><button class="btn btn-primary" id="btnNext">Weiter →</button></div>
-    <div class="portal-footer">Powered by <a href="https://elevo.solutions" target="_blank">ELEVO</a></div>
+    <div class="portal-footer">Powered by <a href="https://elevo.solutions">ELEVO</a></div>
   </div>
 </div>
 
+<div class="step-actions" id="stepActions" style="display:none"><button class="btn btn-secondary" id="btnPrev" disabled>← Zurück</button><button class="btn btn-primary" id="btnNext">Weiter →</button></div>
+
 <!-- Tour -->
 <div class="tour-overlay" id="tourOverlay"></div>
-<div class="tour-spotlight" id="tourSpotlight" style="display:none"></div>
 <div class="tour-tooltip" id="tourTooltip" style="display:none">
   <div class="tour-step-indicator" id="tourIndicator"></div>
   <div class="tour-title" id="tourTitle"></div>
@@ -298,300 +309,101 @@
 <div class="toast" id="toast"></div>
 
 <script>
-(function() {
-  const TOKEN = window.location.pathname.split('/p/')[1];
-  let currentStep = 1;
-  const totalSteps = 6;
-  let projectData = null;
+(function(){
+  const TOKEN=location.pathname.split('/p/')[1];
+  let step=1,data=null;
+  const S=[{n:1,l:'Firma'},{n:2,l:'Story'},{n:3,l:'Kunden'},{n:4,l:'Angebot'},{n:5,l:'Stimmen'},{n:6,l:'Dateien'}];
 
-  const steps = [
-    { num: 1, label: 'Firma' },
-    { num: 2, label: 'Story' },
-    { num: 3, label: 'Kunden' },
-    { num: 4, label: 'Angebot' },
-    { num: 5, label: 'Stimmen' },
-    { num: 6, label: 'Dateien' },
+  // TOUR
+  const tour=[
+    {t:'Dein Fortschritt',d:'Hier siehst du was noch fehlt. Die Checkliste aktualisiert sich automatisch.'},
+    {t:'6 kurze Schritte',d:'Klick dich durch — von den Basics bis zum Upload. Alles wird automatisch gespeichert.'},
+    {t:'Ausfüllen & Fertig',d:'Trag ein was du weißt, überspring was du nicht weißt. Am Ende klickst du „Fertig" und wir legen los.'},
   ];
+  let ti=0;
 
-  // ═══ ONBOARDING TOUR ═══
-  const tourSteps = [
-    { target: '#progressSection', title: 'Dein Fortschritt', desc: 'Hier siehst du auf einen Blick, was noch fehlt. Die Checkliste aktualisiert sich automatisch, wenn du Angaben machst oder Dateien hochlädst.', pos: 'below' },
-    { target: '#stepsNav', title: '6 kurze Schritte', desc: 'Klick dich durch die Tabs — von den Basics über eure Geschichte bis zum Datei-Upload. Du kannst jederzeit hin und her springen.', pos: 'below' },
-    { target: '.step-panel[data-step="1"]', title: 'Einfach ausfüllen', desc: 'Trag ein was du weißt. Felder mit „optional" kannst du skippen. Alles wird automatisch gespeichert — du kannst jederzeit zurückkommen.', pos: 'above' },
-    { target: '#stepActions', title: 'Fertig? Weiter.', desc: 'Klick „Weiter" wenn du mit einem Schritt fertig bist. Am Ende bekommst du eine Bestätigung und wir legen los.', pos: 'above' },
-  ];
-
-  let tourIndex = 0;
-
-  function startTour() {
-    const seen = localStorage.getItem(`elevo_tour_${TOKEN}`);
-    if (seen) return;
-    tourIndex = 0;
-    showTourStep();
+  function startTour(){if(localStorage.getItem('et_'+TOKEN))return;ti=0;showTour()}
+  function showTour(){
+    if(ti>=tour.length){endTour();return}
+    document.getElementById('tourOverlay').classList.add('active');
+    const tt=document.getElementById('tourTooltip');tt.style.display='block';
+    document.getElementById('tourIndicator').textContent=`${ti+1} / ${tour.length}`;
+    document.getElementById('tourTitle').textContent=tour[ti].t;
+    document.getElementById('tourDesc').textContent=tour[ti].d;
+    document.getElementById('tourDots').innerHTML=tour.map((_,i)=>`<div class="tour-dot ${i===ti?'active':''}"></div>`).join('');
+    document.getElementById('tourNext').textContent=ti===tour.length-1?'Los geht\'s':'Weiter';
   }
+  function endTour(){document.getElementById('tourOverlay').classList.remove('active');document.getElementById('tourTooltip').style.display='none';localStorage.setItem('et_'+TOKEN,'1')}
+  document.getElementById('tourNext').onclick=()=>{ti++;showTour()};
+  document.getElementById('tourSkip').onclick=endTour;
+  document.getElementById('tourOverlay').onclick=endTour;
 
-  function showTourStep() {
-    if (tourIndex >= tourSteps.length) { endTour(); return; }
-    const step = tourSteps[tourIndex];
-    const el = document.querySelector(step.target);
-    if (!el) { tourIndex++; showTourStep(); return; }
-
-    const overlay = document.getElementById('tourOverlay');
-    const spotlight = document.getElementById('tourSpotlight');
-    const tooltip = document.getElementById('tourTooltip');
-
-    overlay.classList.add('active');
-    spotlight.style.display = 'block';
-    tooltip.style.display = 'block';
-
-    const rect = el.getBoundingClientRect();
-    const pad = 8;
-    spotlight.style.top = (rect.top + window.scrollY - pad) + 'px';
-    spotlight.style.left = (rect.left - pad) + 'px';
-    spotlight.style.width = (rect.width + pad * 2) + 'px';
-    spotlight.style.height = (rect.height + pad * 2) + 'px';
-
-    document.getElementById('tourIndicator').textContent = `Schritt ${tourIndex + 1} von ${tourSteps.length}`;
-    document.getElementById('tourTitle').textContent = step.title;
-    document.getElementById('tourDesc').textContent = step.desc;
-
-    const dots = document.getElementById('tourDots');
-    dots.innerHTML = tourSteps.map((_, i) => `<div class="tour-dot ${i === tourIndex ? 'active' : ''}"></div>`).join('');
-
-    if (step.pos === 'below') {
-      tooltip.style.top = (rect.bottom + window.scrollY + 16) + 'px';
-    } else {
-      tooltip.style.top = (rect.top + window.scrollY - tooltip.offsetHeight - 16) + 'px';
-    }
-    tooltip.style.left = Math.max(20, rect.left) + 'px';
-    tooltip.style.right = 'auto';
-
-    const btnNext = document.getElementById('tourNext');
-    btnNext.textContent = tourIndex === tourSteps.length - 1 ? 'Los geht\'s' : 'Weiter';
-
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // INIT
+  async function init(){
+    if(!TOKEN)return err();
+    try{
+      const r=await fetch('/api/portal/'+TOKEN);if(!r.ok)throw 0;
+      data=await r.json();
+      document.getElementById('companyBadge').textContent=data.company_name;
+      document.getElementById('loadingScreen').style.display='none';
+      document.getElementById('mainContent').style.display='block';
+      document.getElementById('stepActions').style.display='flex';
+      buildNav();buildHours();initRadio();initDrop();initPrice();restore();restoreUp();updateProg();show(1);
+      setTimeout(startTour,500);
+    }catch(e){err()}
   }
+  function err(){document.getElementById('loadingScreen').style.display='none';document.getElementById('errorScreen').style.display='block'}
 
-  function endTour() {
-    document.getElementById('tourOverlay').classList.remove('active');
-    document.getElementById('tourSpotlight').style.display = 'none';
-    document.getElementById('tourTooltip').style.display = 'none';
-    localStorage.setItem(`elevo_tour_${TOKEN}`, '1');
-  }
+  // NAV
+  function buildNav(){document.getElementById('stepsNav').innerHTML=S.map(s=>`<div class="step-tab" data-step="${s.n}" onclick="window._g(${s.n})"><span class="step-num">${s.n}</span>${s.l}</div>`).join('')}
+  window._g=n=>{save(step);show(n)};
 
-  document.getElementById('tourNext').onclick = () => { tourIndex++; showTourStep(); };
-  document.getElementById('tourSkip').onclick = endTour;
-
-  // ═══ INIT ═══
-  async function init() {
-    if (!TOKEN) return showError();
-    try {
-      const res = await fetch(`/api/portal/${TOKEN}`);
-      if (!res.ok) throw new Error();
-      projectData = await res.json();
-      document.getElementById('companyBadge').textContent = projectData.company_name;
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('mainContent').style.display = 'block';
-      buildStepsNav(); buildHoursGrid(); initRadioGroups(); initDropzones(); initPriceToggle();
-      restoreBriefingData(); restoreUploads(); updateProgress(); showStep(1);
-      setTimeout(startTour, 600);
-    } catch (e) { showError(); }
-  }
-
-  function showError() {
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('errorScreen').style.display = 'block';
-  }
-
-  // ═══ NAV ═══
-  function buildStepsNav() {
-    document.getElementById('stepsNav').innerHTML = steps.map(s =>
-      `<div class="step-tab" data-step="${s.num}" onclick="window._go(${s.num})"><span class="step-num">${s.num}</span>${s.label}</div>`
-    ).join('');
-  }
-
-  window._go = n => { saveBriefingStep(currentStep); showStep(n); };
-
-  function showStep(n) {
-    currentStep = n;
-    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.step-tab').forEach(t => t.classList.remove('active'));
-    const panel = document.querySelector(`.step-panel[data-step="${n}"]`);
-    const tab = document.querySelector(`.step-tab[data-step="${n}"]`);
-    if (panel) panel.classList.add('active');
-    if (tab) tab.classList.add('active');
-    document.getElementById('btnPrev').disabled = n === 1;
-    document.getElementById('btnNext').innerHTML = n === totalSteps ? 'Fertig ✓' : 'Weiter →';
-    document.getElementById('stepActions').style.display = 'flex';
+  function show(n){
+    step=n;
+    document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.step-tab').forEach(t=>t.classList.remove('active'));
+    const p=document.querySelector('.step-panel[data-step="'+n+'"]'),t=document.querySelector('.step-tab[data-step="'+n+'"]');
+    if(p)p.classList.add('active');if(t)t.classList.add('active');
+    document.getElementById('btnPrev').disabled=n===1;
+    document.getElementById('btnNext').innerHTML=n===6?'Fertig ✓':'Weiter →';
+    document.getElementById('stepActions').style.display='flex';
     document.getElementById('successScreen').classList.remove('active');
-    updateStepTabs();
+    updTabs();window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  function updateStepTabs() {
-    document.querySelectorAll('.step-tab').forEach(tab => {
-      const s = parseInt(tab.dataset.step);
-      tab.classList.toggle('completed', s < 6 ? !!projectData.briefing[s] : projectData.uploads?.length > 0);
-    });
-  }
+  function updTabs(){document.querySelectorAll('.step-tab').forEach(t=>{const s=+t.dataset.step;t.classList.toggle('completed',s<6?!!data.briefing[s]:data.uploads?.length>0)})}
 
-  document.getElementById('btnPrev').onclick = () => { saveBriefingStep(currentStep); if (currentStep > 1) showStep(currentStep - 1); };
-  document.getElementById('btnNext').onclick = async () => {
-    await saveBriefingStep(currentStep);
-    if (currentStep < totalSteps) { showStep(currentStep + 1); } else {
-      document.getElementById('stepActions').style.display = 'none';
-      document.getElementById('successScreen').classList.add('active');
-      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-    }
-  };
+  document.getElementById('btnPrev').onclick=()=>{save(step);if(step>1)show(step-1)};
+  document.getElementById('btnNext').onclick=async()=>{await save(step);if(step<6)show(step+1);else{document.getElementById('stepActions').style.display='none';document.getElementById('successScreen').classList.add('active');document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'))}};
 
-  // ═══ BRIEFING ═══
-  function getStepData(step) {
-    const panel = document.querySelector(`.step-panel[data-step="${step}"]`);
-    if (!panel) return {};
-    const data = {};
-    panel.querySelectorAll('input, textarea, select').forEach(el => { if (el.name && el.type !== 'radio') data[el.name] = el.value; });
-    panel.querySelectorAll('.radio-option.selected input[type="radio"]').forEach(el => { data[el.name] = el.value; });
-    return data;
-  }
+  // BRIEFING
+  function getData(s){const p=document.querySelector('.step-panel[data-step="'+s+'"]');if(!p)return{};const d={};p.querySelectorAll('input,textarea,select').forEach(e=>{if(e.name&&e.type!=='radio')d[e.name]=e.value});p.querySelectorAll('.radio-option.selected input[type="radio"]').forEach(e=>{d[e.name]=e.value});return d}
 
-  async function saveBriefingStep(step) {
-    if (step === 6) return;
-    const data = getStepData(step);
-    if (!Object.values(data).some(v => v)) return;
-    try {
-      await fetch(`/api/portal/${TOKEN}/briefing/${step}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      projectData.briefing[step] = data;
-      updateProgress(); updateStepTabs();
-    } catch (e) {}
-  }
+  async function save(s){if(s===6)return;const d=getData(s);if(!Object.values(d).some(v=>v))return;try{await fetch('/api/portal/'+TOKEN+'/briefing/'+s,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});data.briefing[s]=d;updateProg();updTabs()}catch(e){}}
 
-  function restoreBriefingData() {
-    for (const [step, data] of Object.entries(projectData.briefing)) {
-      const panel = document.querySelector(`.step-panel[data-step="${step}"]`);
-      if (!panel || !data) continue;
-      for (const [key, value] of Object.entries(data)) {
-        const el = panel.querySelector(`[name="${key}"]`);
-        if (!el) continue;
-        if (el.type === 'radio') {
-          const opt = panel.querySelector(`.radio-option[data-value="${value}"]`);
-          if (opt) { opt.classList.add('selected'); opt.querySelector('input').checked = true; }
-        } else { el.value = value; }
-      }
-    }
-    const pr = document.querySelector('.radio-option.selected input[name="show_prices"]');
-    if (pr && (pr.value === 'yes' || pr.value === 'ab')) document.getElementById('pricesField').style.display = 'block';
-  }
+  function restore(){for(const[s,d]of Object.entries(data.briefing)){const p=document.querySelector('.step-panel[data-step="'+s+'"]');if(!p||!d)continue;for(const[k,v]of Object.entries(d)){const e=p.querySelector('[name="'+k+'"]');if(!e)continue;if(e.type==='radio'){const o=p.querySelector('.radio-option[data-value="'+v+'"]');if(o){o.classList.add('selected');o.querySelector('input').checked=true}}else e.value=v}}const pr=document.querySelector('.radio-option.selected input[name="show_prices"]');if(pr&&(pr.value==='yes'||pr.value==='ab'))document.getElementById('pricesField').style.display='block'}
 
-  // ═══ HOURS ═══
-  function buildHoursGrid() {
-    document.getElementById('hoursGrid').innerHTML = ['Mo','Di','Mi','Do','Fr','Sa','So'].map(d =>
-      `<span class="day-label">${d}</span><input type="text" name="hours_${d.toLowerCase()}_open" placeholder="09:00"><span class="sep">–</span><input type="text" name="hours_${d.toLowerCase()}_close" placeholder="18:00">`
-    ).join('');
-  }
+  function buildHours(){document.getElementById('hoursGrid').innerHTML=['Mo','Di','Mi','Do','Fr','Sa','So'].map(d=>`<span class="day-label">${d}</span><input type="text" name="hours_${d.toLowerCase()}_open" placeholder="09:00"><span class="sep">–</span><input type="text" name="hours_${d.toLowerCase()}_close" placeholder="18:00">`).join('')}
 
-  // ═══ RADIO ═══
-  function initRadioGroups() {
-    document.querySelectorAll('.radio-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        opt.closest('.radio-group').querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
-        opt.classList.add('selected');
-        opt.querySelector('input').checked = true;
-      });
-    });
-  }
+  function initRadio(){document.querySelectorAll('.radio-option').forEach(o=>{o.addEventListener('click',()=>{o.closest('.radio-group').querySelectorAll('.radio-option').forEach(x=>x.classList.remove('selected'));o.classList.add('selected');o.querySelector('input').checked=true})})}
 
-  function initPriceToggle() {
-    document.querySelectorAll('input[name="show_prices"]').forEach(r => {
-      r.closest('.radio-option').addEventListener('click', () => {
-        document.getElementById('pricesField').style.display = (r.value === 'yes' || r.value === 'ab') ? 'block' : 'none';
-      });
-    });
-  }
+  function initPrice(){document.querySelectorAll('input[name="show_prices"]').forEach(r=>{r.closest('.radio-option').addEventListener('click',()=>{document.getElementById('pricesField').style.display=(r.value==='yes'||r.value==='ab')?'block':'none'})})}
 
-  // ═══ UPLOADS ═══
-  function initDropzones() {
-    document.querySelectorAll('.dropzone').forEach(zone => {
-      const cat = zone.dataset.category;
-      const fi = document.createElement('input');
-      fi.type = 'file'; fi.multiple = true; fi.accept = 'image/*,.pdf,.doc,.docx,.mp4,.mov,.svg'; fi.style.display = 'none';
-      zone.appendChild(fi);
-      zone.addEventListener('click', () => fi.click());
-      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
-      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
-      zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('dragover'); uploadFiles(e.dataTransfer.files, cat); });
-      fi.addEventListener('change', () => { if (fi.files.length) uploadFiles(fi.files, cat); fi.value = ''; });
-    });
-  }
+  // UPLOADS
+  function initDrop(){document.querySelectorAll('.dropzone').forEach(z=>{const c=z.dataset.category;const f=document.createElement('input');f.type='file';f.multiple=true;f.accept='image/*,.pdf,.doc,.docx,.mp4,.mov,.svg';f.capture='environment';f.style.display='none';z.appendChild(f);z.onclick=()=>f.click();z.ondragover=e=>{e.preventDefault();z.classList.add('dragover')};z.ondragleave=()=>z.classList.remove('dragover');z.ondrop=e=>{e.preventDefault();z.classList.remove('dragover');up(e.dataTransfer.files,c)};f.onchange=()=>{if(f.files.length)up(f.files,c);f.value=''}})}
 
-  async function uploadFiles(files, category) {
-    const fd = new FormData();
-    fd.append('category', category);
-    for (const f of files) fd.append('files', f);
-    const catEl = document.querySelector(`.upload-cat[data-category="${category}"]`);
-    const prog = catEl.querySelector('.upload-progress');
-    const fill = catEl.querySelector('.upload-progress-fill');
-    prog.classList.add('active'); fill.style.width = '30%';
-    try {
-      const res = await fetch(`/api/portal/${TOKEN}/upload`, { method: 'POST', body: fd });
-      fill.style.width = '100%';
-      if (!res.ok) { const err = await res.json(); showToast(err.error || 'Fehler', 'error'); return; }
-      const data = await res.json();
-      showToast(`${data.uploaded.length} Datei(en) hochgeladen`, 'success');
-      const pr = await fetch(`/api/portal/${TOKEN}`);
-      projectData = await pr.json();
-      restoreUploads(); updateProgress(); updateStepTabs();
-    } catch (e) { showToast('Upload fehlgeschlagen', 'error'); }
-    finally { setTimeout(() => { prog.classList.remove('active'); fill.style.width = '0%'; }, 500); }
-  }
+  async function up(files,cat){const fd=new FormData;fd.append('category',cat);for(const f of files)fd.append('files',f);const el=document.querySelector('.upload-cat[data-category="'+cat+'"]');const pg=el.querySelector('.upload-progress'),pf=el.querySelector('.upload-progress-fill');pg.classList.add('active');pf.style.width='40%';try{const r=await fetch('/api/portal/'+TOKEN+'/upload',{method:'POST',body:fd});pf.style.width='100%';if(!r.ok){const e=await r.json();toast(e.error||'Fehler','error');return}const d=await r.json();toast(d.uploaded.length+' hochgeladen');const pr=await fetch('/api/portal/'+TOKEN);data=await pr.json();restoreUp();updateProg();updTabs()}catch(e){toast('Fehler','error')}finally{setTimeout(()=>{pg.classList.remove('active');pf.style.width='0%'},400)}}
 
-  function restoreUploads() {
-    if (!projectData.uploads) return;
-    document.querySelectorAll('.file-list').forEach(l => l.innerHTML = '');
-    const groups = {};
-    projectData.uploads.forEach(u => { if (!groups[u.category]) groups[u.category] = []; groups[u.category].push(u); });
-    for (const [cat, files] of Object.entries(groups)) {
-      const list = document.querySelector(`.file-list[data-category="${cat}"]`);
-      const cEl = document.querySelector(`[data-count="${cat}"]`);
-      if (!list) continue;
-      if (cEl) cEl.textContent = `${files.length} Datei${files.length > 1 ? 'en' : ''}`;
-      files.forEach(f => {
-        const isImg = f.mime_type?.startsWith('image/');
-        const item = document.createElement('div');
-        item.className = 'file-item';
-        item.innerHTML = `<div class="file-item-info"><div class="file-item-icon">${isImg ? '◻' : '◻'}</div><span class="file-item-name">${f.original_name}</span><span class="file-item-size">${formatSize(f.size)}</span></div><button class="file-item-delete" onclick="window._del(${f.id},'${cat}')" title="Löschen">×</button>`;
-        list.appendChild(item);
-      });
-    }
-    ['logo','team','space','work','other'].forEach(c => { if (!groups[c]) { const el = document.querySelector(`[data-count="${c}"]`); if (el) el.textContent = '—'; } });
-  }
+  function restoreUp(){if(!data.uploads)return;document.querySelectorAll('.file-list').forEach(l=>l.innerHTML='');const g={};data.uploads.forEach(u=>{if(!g[u.category])g[u.category]=[];g[u.category].push(u)});for(const[c,fs]of Object.entries(g)){const l=document.querySelector('.file-list[data-category="'+c+'"]'),ce=document.querySelector('[data-count="'+c+'"]');if(!l)continue;if(ce)ce.textContent=fs.length+' Datei'+(fs.length>1?'en':'');fs.forEach(f=>{const i=document.createElement('div');i.className='file-item';i.innerHTML=`<div class="file-item-info"><div class="file-item-icon">${f.mime_type?.startsWith('image/')?'◻':'◻'}</div><span class="file-item-name">${f.original_name}</span><span class="file-item-size">${fmt(f.size)}</span></div><button class="file-item-delete" onclick="window._d(${f.id},'${c}')">×</button>`;l.appendChild(i)})}['logo','team','space','work','other'].forEach(c=>{if(!g[c]){const e=document.querySelector('[data-count="'+c+'"]');if(e)e.textContent='—'}})}
 
-  window._del = async (id, cat) => {
-    try {
-      await fetch(`/api/portal/${TOKEN}/upload/${id}`, { method: 'DELETE' });
-      const pr = await fetch(`/api/portal/${TOKEN}`);
-      projectData = await pr.json();
-      restoreUploads(); updateProgress(); showToast('Gelöscht', 'success');
-    } catch (e) { showToast('Fehler', 'error'); }
-  };
+  window._d=async(id,c)=>{try{await fetch('/api/portal/'+TOKEN+'/upload/'+id,{method:'DELETE'});const r=await fetch('/api/portal/'+TOKEN);data=await r.json();restoreUp();updateProg();toast('Gelöscht')}catch(e){}};
 
-  // ═══ PROGRESS ═══
-  function updateProgress() {
-    const cl = projectData.checklist || [];
-    const done = cl.filter(c => c.completed).length;
-    const pct = cl.length > 0 ? Math.round((done / cl.length) * 100) : 0;
-    document.getElementById('progressPercent').textContent = `${pct}%`;
-    document.getElementById('progressFill').style.width = `${pct}%`;
-    document.getElementById('checklist').innerHTML = cl.map(c =>
-      `<div class="checklist-item ${c.completed ? 'done' : ''}"><div class="checklist-icon ${c.completed ? 'done' : ''}">${c.completed ? '✓' : ''}</div><span>${c.item}</span></div>`
-    ).join('');
-  }
+  function updateProg(){const cl=data.checklist||[];const done=cl.filter(c=>c.completed).length;const pct=cl.length?Math.round(done/cl.length*100):0;document.getElementById('progressPercent').textContent=pct+'%';document.getElementById('progressFill').style.width=pct+'%';document.getElementById('checklist').innerHTML=cl.map(c=>`<div class="checklist-item ${c.completed?'done':''}"><div class="checklist-icon ${c.completed?'done':''}">${c.completed?'✓':''}</div><span>${c.item}</span></div>`).join('')}
 
-  // ═══ UTILS ═══
-  function formatSize(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b/1024).toFixed(0) + ' KB'; return (b/1048576).toFixed(1) + ' MB'; }
-  function showToast(msg, type = 'success') { const t = document.getElementById('toast'); t.textContent = msg; t.className = `toast ${type} show`; setTimeout(() => t.classList.remove('show'), 3000); }
+  function fmt(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(0)+' KB';return(b/1048576).toFixed(1)+' MB'}
+  function toast(m,t='success'){const e=document.getElementById('toast');e.textContent=m;e.className='toast '+t+' show';setTimeout(()=>e.classList.remove('show'),2500)}
 
-  let saveTimer;
-  document.addEventListener('input', () => { clearTimeout(saveTimer); saveTimer = setTimeout(() => saveBriefingStep(currentStep), 2000); });
+  let st;document.addEventListener('input',()=>{clearTimeout(st);st=setTimeout(()=>save(step),1500)});
 
   init();
 })();
