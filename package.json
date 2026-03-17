@@ -1,0 +1,17 @@
+{
+  "name": "elevo-portal",
+  "version": "1.0.0",
+  "description": "ELEVO Client Portal — Upload & Briefing System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "better-sqlite3": "^11.3.0",
+    "multer": "^1.4.5-lts.1",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5"
+  }
+}
