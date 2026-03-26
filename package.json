@@ -1,7 +1,7 @@
 {
-  "name": "elevo-portal",
-  "version": "2.0.0",
-  "description": "ELEVO Client Portal — Upload, Briefing & Google Drive Sync",
+  "name": "elevo-kundensuite",
+  "version": "3.0.0",
+  "description": "ELEVO Kundensuite",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -12,6 +12,7 @@
     "better-sqlite3": "^11.3.0",
     "multer": "^1.4.5-lts.1",
     "dotenv": "^16.4.5",
+    "nodemailer": "^6.9.0",
     "googleapis": "^144.0.0"
   }
 }
