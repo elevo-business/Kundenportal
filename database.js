@@ -1,5 +1,6 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
 const crypto = require('crypto');
 
 const DB_PATH = path.join(__dirname, 'data', 'portal.db');
@@ -7,6 +8,7 @@ let db;
 
 function getDb() {
   if (!db) {
+    fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
     db = new Database(DB_PATH);
     db.pragma('journal_mode = WAL');
     db.pragma('foreign_keys = ON');
@@ -88,6 +90,17 @@ function initTables() {
       expires_at DATETIME NOT NULL,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS admin_sessions (
+      id TEXT PRIMARY KEY,
+      expires_at DATETIME NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_sessions_project ON sessions(project_id);
+    CREATE INDEX IF NOT EXISTS idx_uploads_project ON uploads(project_id);
+    CREATE INDEX IF NOT EXISTS idx_briefing_project ON briefing(project_id);
+    CREATE INDEX IF NOT EXISTS idx_feedback_project ON feedback(project_id);
   `);
 }
 
@@ -130,7 +143,7 @@ function verifyPassword(password, hash, salt) {
 }
 
 // ═══ HELPERS ═══
-function generateToken() { return crypto.randomBytes(6).toString('hex'); }
+function generateToken() { return crypto.randomBytes(12).toString('hex'); }
 function generateId() { return crypto.randomUUID(); }
 function generateSession() { return crypto.randomBytes(32).toString('hex'); }
 

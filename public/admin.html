@@ -5,20 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ELEVO — Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --bg:#05070E;--bg-elevated:#0A0E1A;--surface:#111827;--surface-hover:#1A2035;
-      --border:#1E2A42;--border-hover:#2D3A54;
-      --text:#E2E8F0;--text-muted:#8899B0;--text-dim:#516179;
-      --accent:#3B82F6;--accent-hover:#2563EB;--accent-glow:rgba(59,130,246,.15);--accent-soft:rgba(59,130,246,.06);
-      --green:#10B981;--green-bg:rgba(16,185,129,.08);
-      --orange:#F59E0B;--orange-bg:rgba(245,158,11,.08);
-      --red:#EF4444;--indigo:#818CF8;
-      --font-h:'Sora',sans-serif;--font-b:'Outfit',sans-serif;
+      --bg:#0A0A0B;--bg-elevated:#0E0E10;--surface:#141416;--surface-hover:#1A1A1D;
+      --border:rgba(255,255,255,.09);--border-hover:rgba(255,255,255,.17);
+      --text:#FFFFFF;--text-muted:#8C8C94;--text-dim:#5C5C64;
+      --accent:#4D8AFF;--accent-hover:#316FF0;--accent-glow:rgba(77,138,255,.18);--accent-soft:rgba(77,138,255,.08);
+      --green:#3DDC8E;--green-bg:rgba(61,220,142,.09);
+      --orange:#F5B14B;--orange-bg:rgba(245,177,75,.09);
+      --red:#FF5C5C;--indigo:#818CF8;
+      --font-h:'Inter','Helvetica Neue',Arial,sans-serif;--font-b:'Inter','Helvetica Neue',Arial,sans-serif;
     }
-    body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;font-weight:300}
+    ::selection{background:var(--accent);color:#fff}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;font-weight:400;letter-spacing:-.005em}
     .container{max-width:1000px;margin:0 auto;padding:24px 20px}
     .login-screen{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
     .login-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px 40px;width:100%;max-width:380px;text-align:center}
@@ -164,14 +166,14 @@
 
   window.doLogin=async()=>{const pw=document.getElementById('loginPassword').value;try{const r=await fetch('/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});if(!r.ok){document.getElementById('loginError').style.display='block';return}const d=await r.json();tk=d.token;localStorage.setItem('elevo_admin_token',tk);main(d.driveEnabled,d.emailEnabled)}catch(e){document.getElementById('loginError').style.display='block'}};
   document.getElementById('loginPassword').onkeydown=e=>{if(e.key==='Enter')doLogin()};
-  window.logout=()=>{localStorage.removeItem('elevo_admin_token');location.reload()};
+  window.logout=()=>{const old=tk;localStorage.removeItem('elevo_admin_token');if(old){fetch('/api/admin/logout',{method:'POST',headers:{'x-admin-token':old}}).catch(()=>{}).finally(()=>location.reload())}else location.reload()};
   if(tk)main();
 
   async function main(drv,eml){document.getElementById('loginScreen').style.display='none';document.getElementById('mainScreen').style.display='block';if(drv===undefined){try{const r=await fetch('/api/admin/drive-status',{headers:h()});drv=(await r.json()).enabled}catch(e){drv=false}}const db=document.getElementById('driveBadge');db.className='badge-sm '+(drv?'badge-on':'badge-off');db.textContent=drv?'Drive ✓':'Drive —';const eb=document.getElementById('emailBadge');eb.className='badge-sm '+(eml?'badge-on':'badge-off');eb.textContent=eml?'Mail ✓':'Mail —';await load()}
   async function load(){try{const r=await fetch('/api/admin/projects',{headers:h()});if(r.status===401){logout();return}projects=await r.json();render()}catch(e){}}
 
   function render(){const g=document.getElementById('grid');if(!projects.length){g.innerHTML='<div class="empty">Noch keine Projekte. Klicke „+ Projekt".</div>';return}
-  g.innerHTML=projects.map(p=>`<div class="project-card" onclick="detail('${p.id}')"><div class="pc-top"><div class="pc-name">${esc(p.company_name)}</div><div class="pc-status-badge status-${p.status||'briefing'}">${SL[p.status]||'Briefing'}</div></div><div class="pc-meta"><span>${p.upload_count} Dateien (${fmtS(p.upload_size)})</span><span>${p.briefing_steps}/5 Briefing</span>${p.feedback_count>0?`<span class="has-feedback">${p.feedback_count} Feedback</span>`:''}<span>${ago(p.updated_at)}</span></div><div class="pc-bar"><div class="pc-bar-track"><div class="pc-bar-fill" style="width:${p.progress}%"></div></div><div class="pc-bar-pct">${p.progress}%</div></div></div>`).join('')}
+  g.innerHTML=projects.map(p=>`<div class="project-card" onclick="detail('${p.id}')"><div class="pc-top"><div class="pc-name">${esc(p.company_name)}</div><div class="pc-status-badge status-${p.status||'briefing'}">${SL[p.status]||'Briefing'}</div></div><div class="pc-meta"><span>${p.upload_count} Dateien (${fmtS(p.upload_size)})</span><span>${Math.min(p.briefing_steps,3)}/3 Briefing</span>${p.feedback_count>0?`<span class="has-feedback">${p.feedback_count} Feedback</span>`:''}<span>${ago(p.updated_at)}</span></div><div class="pc-bar"><div class="pc-bar-track"><div class="pc-bar-fill" style="width:${p.progress}%"></div></div><div class="pc-bar-pct">${p.progress}%</div></div></div>`).join('')}
 
   window.detail=async function(id){try{const r=await fetch('/api/admin/projects/'+id,{headers:h()});if(!r.ok){toast('Fehler');return}cur=await r.json();renderDetail();document.getElementById('listView').classList.add('hidden');document.getElementById('detailView').classList.add('active');window.scrollTo({top:0})}catch(e){toast('Verbindungsfehler')}};
   window.backToList=function(){document.getElementById('detailView').classList.remove('active');document.getElementById('listView').classList.remove('hidden');load()};
@@ -195,12 +197,14 @@
     // FEEDBACK COUNT
     const fc=document.getElementById('fbCount');if(p.feedback&&p.feedback.length){fc.textContent=p.feedback.length;fc.style.display='inline'}else fc.style.display='none';
 
-    // BRIEFING
-    const sn={1:'Unternehmen',2:'Geschichte',3:'Kunden',4:'Angebot',5:'Kundenstimmen'};
-    const fl={company_name:'Firmenname',industry:'Branche',founded:'Gegründet',phone:'Telefon',email:'E-Mail',address:'Adresse',current_website:'Website',social_media:'Social Media',one_liner:'In einem Satz',why_story:'Warum?',usp:'Was macht euch anders?',slogan:'Slogan',target_group:'Zielgruppe',search_terms:'Suchbegriffe',customer_pain:'Größtes Problem',reach:'Reichweite',service_1_name:'Leistung 1',service_1_desc:'Beschreibung',service_2_name:'Leistung 2',service_2_desc:'Beschreibung',service_3_name:'Leistung 3',service_3_desc:'Beschreibung',show_prices:'Preise zeigen?',prices:'Preise',google_stars:'Google Sterne',google_count:'Bewertungen',testimonial_1:'Zitat 1',testimonial_1_name:'Name',testimonial_2:'Zitat 2',testimonial_2_name:'Name',testimonial_3:'Zitat 3',testimonial_3_name:'Name',stats:'Zahlen & Erfolge'};
+    // BRIEFING (3 Schritte — alte Projekte können noch Schritt 4/5 aus v3 haben)
+    const sn={1:'Unternehmen',2:'Angebot',3:'Stil & Wünsche',4:'Weitere Angaben (alt)',5:'Kundenstimmen (alt)'};
+    const fl={company_name:'Firmenname',industry:'Branche',founded:'Gegründet',phone:'Telefon',email:'E-Mail',address:'Adresse',current_website:'Website',social_media:'Social Media',one_liner:'In einem Satz',why_story:'Warum?',usp:'Was macht euch anders?',slogan:'Slogan',target_group:'Zielgruppe',search_terms:'Suchbegriffe',customer_pain:'Größtes Problem',reach:'Reichweite',service_1_name:'Leistung 1',service_1_desc:'Beschreibung',service_2_name:'Leistung 2',service_2_desc:'Beschreibung',service_3_name:'Leistung 3',service_3_desc:'Beschreibung',show_prices:'Preise zeigen?',prices:'Preise',reference_sites:'Vorbild-Websites',color_wishes:'Farben / Stil',must_have:'Muss auf die Website',no_go:'No-Gos',notes:'Sonstiges',google_stars:'Google Sterne',google_count:'Bewertungen',testimonial_1:'Zitat 1',testimonial_1_name:'Name',testimonial_2:'Zitat 2',testimonial_2_name:'Name',testimonial_3:'Zitat 3',testimonial_3_name:'Name',stats:'Zahlen & Erfolge'};
     const bd={};if(p.briefing&&p.briefing.length)p.briefing.forEach(b=>{try{bd[b.step]=JSON.parse(b.data)}catch(e){bd[b.step]=b.data}});
+    const maxStep=Math.max(3,...Object.keys(bd).map(Number).filter(n=>!isNaN(n)));
     let bh='';
-    for(let s=1;s<=5;s++){const d=bd[s];const filled=d&&typeof d==='object'&&Object.values(d).some(v=>v);
+    for(let s=1;s<=maxStep;s++){const d=bd[s];const filled=d&&typeof d==='object'&&Object.values(d).some(v=>v);
+    if(s>3&&!filled)continue;
     if(!filled){bh+=`<div class="b-section"><div class="b-section-header"><div class="b-section-title">${sn[s]}</div><div class="b-section-status empty">Offen</div></div><p class="b-empty">Noch nicht ausgefüllt</p></div>`;continue}
     bh+=`<div class="b-section"><div class="b-section-header"><div class="b-section-title">${sn[s]}</div><div class="b-section-status filled">✓ Ausgefüllt</div></div>`;
     for(const[k,v]of Object.entries(d)){if(k.startsWith('hours_')||!v)continue;bh+=`<div class="b-field"><div class="b-label">${fl[k]||k}</div><div class="b-value">${esc(v)}</div></div>`}
